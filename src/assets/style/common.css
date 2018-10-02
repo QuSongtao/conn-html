@@ -1,0 +1,35 @@
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+.el-submenu__title {
+  height: 46px !important;
+  line-height: 46px !important;
+}
+
+.el-submenu__title:hover, .el-menu-item:hover {
+  background-color: #4a5064 !important;
+}
+
+.el-menu-item {
+  height: 46px !important;
+  line-height: 46px !important;
+  background-color: #333744;
+}
+.logo-hl{
+  background-size: 120px 50px;
+  background-image: url("../svg/logos.svg");
+  width: 120px;
+  height: 50px;
+  display: inline-block;
+  float: left;
+  line-height: 26px;
+
+}
+
+

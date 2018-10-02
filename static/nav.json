@@ -1,0 +1,71 @@
+[
+  {
+    "FM": "FM0001",
+    "TEXT": "系统首页",
+    "URL": "/",
+    "ICON": "el-icon-location",
+    "POWER": true,
+    "LEAF": true,
+    "VALUE": []
+  },
+  {
+    "FM": "FM0002",
+    "TEXT": "通道状态",
+    "URL": "/chlStatus",
+    "ICON": "el-icon-share",
+    "POWER": true,
+    "LEAF": true
+  },
+  {
+    "FM": "FM0003",
+    "TEXT": "队列状态",
+    "URL": "/queueStatus",
+    "ICON": "el-icon-message",
+    "POWER": true,
+    "LEAF": true,
+    "VALUE": []
+  },
+  {
+    "FM": "FM0004",
+    "TEXT": "发送日志",
+    "URL": "/sendLog",
+    "ICON": "el-icon-document",
+    "POWER": true,
+    "LEAF": true,
+    "VALUE": []
+  },
+  {
+    "FM": "FM0005",
+    "TEXT": "接收日志",
+    "URL": "/recvLog",
+    "ICON": "el-icon-tickets",
+    "POWER": true,
+    "LEAF": true,
+    "VALUE": []
+  },
+  {
+    "FM": "FM0006",
+    "TEXT": "后台日志",
+    "URL": "app.goods.gdsCls3",
+    "ICON": "el-icon-time",
+    "POWER": true,
+    "VALUE": [
+      {
+        "FP": "md0001",
+        "TEXT": "IBMMQ日志",
+        "URL": "/mqLog",
+        "SHOW": true,
+        "INDEX": "1",
+        "VALUE": []
+      },
+      {
+        "FP": "md0003",
+        "TEXT": "SOCKET日志",
+        "URL": "/socketLog",
+        "SHOW": true,
+        "INDEX": "2",
+        "VALUE": []
+      }
+    ]
+  }
+]
