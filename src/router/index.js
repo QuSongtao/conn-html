@@ -1,63 +1,19 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import NProgress from 'nprogress' // Progress 进度条
-import 'nprogress/nprogress.css'// Progress 进度条样式
-Vue.use(Router)
+import Vue from 'vue';
+import Router from 'vue-router';
+import NProgress from 'nprogress'; // Progress 进度条
+import 'nprogress/nprogress.css'; // Progress 进度条样式
 
-// 登录页面
-const Login = (resolve) => {
-    import('@/views/system/login').then((m) => {
-      resolve(m)
-    })
-}
-// 框架组件
-const Common = (resolve) => {
-  import('@/components/common').then((m) => {
-    resolve(m)
-  })
-}
-// 系统主页面
-const dashboard = (resolve) => {
-  import('@/views/system/dashboard').then((m) => {
-    resolve(m)
-  })
-}
-// 通道状态
-const chlStatus = (resolve) => {
-  import('@/views/system/chlStatus').then((m) => {
-    resolve(m)
-  })
-}
-// 队列状态
-const queueStatus = (resolve) => {
-  import('@/views/system/queueStatus').then((m) => {
-    resolve(m)
-  })
-}
-// 系统发送日志
-const sendLog = (resolve) => {
-  import('@/views/system/sendLog').then((m) => {
-    resolve(m)
-  })
-}
-// 系统接收日志
-const recvLog = (resolve) => {
-  import('@/views/system/recvLog').then((m) => {
-    resolve(m)
-  })
-}
-// 后端MQ日志
-const mqLog = (resolve) => {
-  import('@/views/system/mqLog').then((m) => {
-    resolve(m)
-  })
-}
-// 后端SOCKET日志
-const socketLog = (resolve) => {
-  import('@/views/system/socketLog').then((m) => {
-    resolve(m)
-  })
-}
+import Login from '@/views/system/login.vue'; // 登录页面
+import Framework from '@/components/framework.vue'; // 主框架
+import Dashboard from '@/views/system/dashboard.vue'; // 系统首页
+import ChlStatus from '@/views/system/chlStatus.vue'; // // 通道状态
+import QueueStatus from '@/views/system/queueStatus.vue'; // 队列状态
+import SendLog from '@/views/system/sendLog.vue'; // 系统发送日志
+import RecvLog from '@/views/system/recvLog.vue'; // 系统接收日志
+import MqLog from '@/views/system/mqLog.vue'; // 后端MQ日志
+import SocketLog from '@/views/system/socketLog.vue'; // 后端SOCKET日志
+
+Vue.use(Router);
 
 // 路由配置
 const router = new Router({
@@ -66,29 +22,32 @@ const router = new Router({
       path: '/',
       name: 'common',
       redirect: '/dashboard',
-      component: Common,
+      component: Framework,
       children: [
-        {path: '/dashboard', name: 'dashboard', component: dashboard},
-        {path: '/chlStatus', name: 'chlStatus', component: chlStatus},
-        {path: '/queueStatus', name: 'queueStatus', component: queueStatus},
-        {path: '/sendLog', name: 'sendLog', component: sendLog},
-        {path: '/recvLog', name: 'recvLog', component: recvLog},
-        {path: '/mqLog', name: 'mqLog', component: mqLog},
-        {path: '/socketLog', name: 'socketLog', component: socketLog}
+        {path: '/dashboard', name: 'dashboard', component: Dashboard},
+        {path: '/chlStatus', name: 'chlStatus', component: ChlStatus},
+        {path: '/queueStatus', name: 'queueStatus', component: QueueStatus},
+        {path: '/sendLog', name: 'sendLog', component: SendLog},
+        {path: '/recvLog', name: 'recvLog', component: RecvLog},
+        {path: '/mqLog', name: 'mqLog', component: MqLog},
+        {path: '/socketLog', name: 'socketLog', component: SocketLog}
       ]
     },
     {path: '/login', name: 'login', component: Login}
   ]
-})
+});
+
 router.beforeEach((to, from, next) => {
-  NProgress.start()
+  NProgress.start(); // 开始进度条
   if (to.path === '/login') {
-    next()
+    next();
   } else {
-    next()
+    next();
   }
-})
+});
+
 router.afterEach(() => {
-  NProgress.done() // 结束Progress
-})
-export default router
+  NProgress.done(); // 结束Progress
+});
+
+export default router;

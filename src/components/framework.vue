@@ -12,23 +12,8 @@
         <span style="font-size: 18px;color: #fff;">通信后台管理系统</span>
       </div>
       <div class="topbar-account topbar-btn">
-        <!--<el-dropdown trigger="click">-->
-          <!--<span class="el-dropdown-link userinfo-inner"><i class="iconfont icon-user"></i> {{nickname}}  <i-->
-            <!--class="iconfont icon-down"></i></span>-->
-          <!--<el-dropdown-menu slot="dropdown">-->
-            <!--<el-dropdown-item>-->
-              <!--<div @click="jumpTo('/user/profile')"><span style="color: #555;font-size: 14px;">个人信息</span></div>-->
-            <!--</el-dropdown-item>-->
-            <!--<el-dropdown-item>-->
-              <!--<div @click="jumpTo('/user/changepwd')"><span style="color: #555;font-size: 14px;">修改密码</span></div>-->
-            <!--</el-dropdown-item>-->
-            <!--<el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>-->
-          <!--</el-dropdown-menu>-->
-        <!--</el-dropdown>-->
         <el-dropdown class="avatar-container" trigger="click">
           <div class="avatar-wrapper">
-            <!--<img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80" alt="">-->
-            <!--<i class="el-icon-caret-bottom" style="color: white; font-size: 18px"></i>-->
             <i class="el-icon-caret-bottom menu-option"></i>
           </div>
           <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -54,29 +39,19 @@
           <i class="iconfont icon-menufold" v-show="!collapsed"></i>
           <i class="iconfont icon-menuunfold" v-show="collapsed"></i>
         </div>
-        <!--导航菜单-->
-        <!--<el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"-->
+        <!-- 导航菜单 加上router属性可以对el-submenu所配置的:index直接路由 -->
         <el-menu :default-active="defaultActiveIndex" router @open="handleOpen" @close="handleClose" :collapse="collapsed"
                  text-color="#fff"
                  active-text-color="#2587ED">
           <template v-for="(item,index) in navData" v-if="item.POWER">
             <el-submenu v-if = "!item.LEAF" :index ="index+''" v-bind:key="item.FM" >
-              <template slot="title" class="el-submenu__title"><i :class="item.ICON"></i><span>{{item.TEXT}}</span>
+              <template slot="title" class="el-submenu__title">
+                <i :class="item.ICON"></i><span>{{item.TEXT}}</span>
               </template>
-              <el-menu-item v-for="val in item.VALUE" :index="val.URL" :key="val.URL"
-                            ><span slot="title">{{val.TEXT}}</span></el-menu-item>
-              <!--<el-menu-item-group>-->
-                <!--<router-link-->
-                  <!--v-for="(value,itemIndex) in item.VALUE"-->
-                  <!--v-bind:key="value.FP"-->
-                  <!--:to="value.URL"-->
-                <!--&gt;-->
-                  <!--<el-menu-item :index="index+'-'+itemIndex">{{value.TEXT}}</el-menu-item>-->
-                <!--</router-link>-->
-              <!--</el-menu-item-group>-->
+              <el-menu-item v-for="val in item.VALUE" :index="val.URL" :key="val.URL">
+                <span slot="title">{{val.TEXT}}</span></el-menu-item>
             </el-submenu>
-            <el-menu-item v-else-if="item.LEAF" :index="item.URL" :key="item.FM"
-                          >
+            <el-menu-item v-else-if="item.LEAF" :index="item.URL" :key="item.FM">
               <!--:class="$route.path==item.URL?'is-active':''"-->
               <i :class="item.ICON"></i><span slot="title">{{item.TEXT}}</span>
             </el-menu-item>
@@ -95,12 +70,11 @@
         </div>
       </section>
     </el-col>
-
   </el-row>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 export default {
   data () {
     return {
@@ -109,45 +83,45 @@ export default {
       collapsed: false,
       isCollapse: false,
       navData: []
-    }
+    };
   },
   methods: {
     _getNavData () {
       axios.get('./../../static/nav.json').then(res => {
-        this.navData = res.data
-        console.log(res.data)
-      })
+        this.navData = res.data;
+        console.log(res.data);
+      });
     },
     handleSelect (index) {
-      this.defaultActiveIndex = index
+      this.defaultActiveIndex = index;
     },
     handleOpen (key, keyPath) {
-      console.log(key, keyPath)
+      console.log(key, keyPath);
     },
     handleClose (key, keyPath) {
-      console.log(key, keyPath)
+      console.log(key, keyPath);
     },
     // 折叠导航栏
     collapse: function () {
-      this.collapsed = !this.collapsed
+      this.collapsed = !this.collapsed;
     },
     jumpTo (url) {
-      this.defaultActiveIndex = url
-      this.$router.push(url) // 用go刷新
+      this.defaultActiveIndex = url;
+      this.$router.push(url); // 用go刷新
     },
     logout () {
-      this.$router.push('/login')
+      this.$router.push('/login');
     }
   },
   mounted () {
-    let user = localStorage.getItem('access-user')
+    let user = localStorage.getItem('access-user');
     if (user) {
-      user = JSON.parse(user)
-      this.nickname = user.nickname || ''
+      user = JSON.parse(user);
+      this.nickname = user.nickname || '';
     }
-    this._getNavData()
+    this._getNavData();
   }
-}
+};
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">

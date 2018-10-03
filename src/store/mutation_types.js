@@ -1,1 +1,1 @@
-export const CONTENT_TITLTE = 'CONTENT_TITLTE'
+export const CONTENT_TITLTE = 'CONTENT_TITLTE';

@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <el-form class="login-form" auto-complete="on" label-position="left" :model="loginForm" ref="loginForm">
-      <h3 class="title">通信系统登录</h3>
+      <h3 class="title">号角通信系统登录</h3>
       <el-form-item prop="username"
                     :rules="[{ required: true, message: '请输入账号!', trigger: 'blur' }]"
       >

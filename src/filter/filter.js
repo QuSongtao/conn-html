@@ -1,15 +1,15 @@
 const currency = function (value) {
-  return value + 1
-}
+  return value + 1;
+};
 const getFileType = function (fileName) {
   if (fileName) {
-    let arr = fileName.split('.')
-    return arr[1]
+    let arr = fileName.split('.');
+    return arr[1];
   }
-  return ''
-}
+  return '';
+};
 
 export default {
   currency,
   getFileType
-}
+};
