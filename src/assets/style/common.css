@@ -31,5 +31,30 @@ a {
   line-height: 26px;
 
 }
+.el-tabs__content{
+  padding: 0 !important;
+}
+.el-tabs__nav-scroll{
+  margin-right: -1px;
+}
+
+/*重新设置textarea属性*/
+.el-textarea__inner{
+  color: #ff9d00 !important;
+  height: 406px;
+  border: 0 !important;
+  overflow: auto;
+  font-size: 12px !important;
+  background-color:#004444 !important;
+  font-family: 'Consolas';
+  padding: 5px 10px !important;
+}
+.el-form-item{margin-bottom: 10px !important;}
+.el-table td{padding: 6px 0 !important;}/*表格行间距*/
+
+.log-lv-title{color: #e7e7ea;}
+.log-lv-info{color: #3dd83d;}
+.log-lv-warn{color: #ffff00;}
+.log-lv-error{color: #ff4949;}
 
 

@@ -21,7 +21,11 @@
           登录
         </el-button>
       </el-form-item>
-
+      <div>
+        <div id="box" ref="mybox">
+          DEMO
+        </div>
+      </div>
     </el-form>
   </div>
 </template>
@@ -31,10 +35,10 @@ export default {
   data () {
     return {
       loginForm: {
-        username: '123',
+        username: 'admin',
         password: ''
       }
-    }
+    };
   },
   methods: {
     submitForm (formName) {
@@ -43,22 +47,32 @@ export default {
           this.$message({
             message: '恭喜你，成功消息',
             type: 'success'
-          })
-          this.login()
+          });
+          this.login();
         } else {
-          this.$message.error('失败消息')
-          return false
+          this.$message.error('失败消息');
+          return false;
         }
-      })
+      });
     },
     login () {
-      this.$router.push('/')
+      this.$router.push('/');
     },
     handleLogin () {
-      this.$router.push('/')
+      this.$router.push('/');
+    },
+    init () {
+      const self = this;
+      this.$refs.mybox.style.color = 'red';
+      setTimeout(() => {
+        self.$refs.mybox.style.color = 'blue';
+      }, 2000);
     }
+  },
+  mounted () {
+    this.init();
   }
-}
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
