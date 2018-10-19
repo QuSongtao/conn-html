@@ -83,4 +83,5 @@ export default {
 </script>
 <style lang="scss" scoped>
   .status-tag-radius{border-radius: 14px !important;}
+  .el-form-item{margin-bottom: 10px !important;}
 </style>

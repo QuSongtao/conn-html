@@ -18,19 +18,21 @@
         <el-input v-model="formInline.telId" placeholder="输入电文ID" clearable style="width: 160px;"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button type="primary" @click="query">查询</el-button>
         <el-button type="primary" plain @click="reSend">重发</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="sendLogData"
               :height="tableHeight" border
               :style="{'width': '100%','height': tableHeight}"
+              ref="tableSendLog"
               @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="40"></el-table-column>
       <el-table-column type="index" label="序号" width="60"></el-table-column>
+      <el-table-column prop="id" label="主键ID" width="10" v-if="show"></el-table-column>
       <el-table-column prop="telId" label="电文ID" width="120"></el-table-column>
       <el-table-column prop="telType" label="电文类型" width="80"></el-table-column>
-      <el-table-column prop="sendFlag" label="发送状态" width="180" v-if="show"></el-table-column>
+      <el-table-column prop="sendFlag" label="发送状态" width="80" :formatter="statusFormat"></el-table-column>
       <el-table-column prop="createTime" label="插入时间" width="180"></el-table-column>
       <el-table-column prop="sendTime" label="发送时间" width="180"></el-table-column>
       <el-table-column prop="msgId" label="消息ID" show-overflow-tooltip></el-table-column>
@@ -79,15 +81,22 @@ export default {
       dialogVisible: false,
       tableHeight: document.body.clientHeight - 150,
       formInline: {
-        telId: '2',
-        date1: new Date(),
-        date2: new Date()
+        telId: '',
+        date1: this.$util.formatDate(new Date()),
+        date2: this.$util.formatDate(new Date())
       },
       sendLogData: []
     };
   },
   methods: {
-    onSubmit: function () {
+    // 查询按钮
+    query: function () {
+      const loading = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      });
       axios.get('http://localhost:8083/mgr/sendLog/data', {
         params: {
           dtStart: this.formInline.date1,
@@ -99,7 +108,19 @@ export default {
       }).then(res => {
         this.totalRow = res.data.data.page.totalRows;
         this.sendLogData = res.data.data.rows;
+        loading.close();
       });
+    },
+    // 发送状态格式化
+    statusFormat: function (row, column, cellValue, index) {
+      switch (cellValue) {
+        case '0':
+          return '未发送';
+        case '1':
+          return '已发送';
+        default:
+          return '未知';
+      }
     },
     handleInfo: function (index, row) {
       this.msgId = row.msgId;
@@ -120,9 +141,34 @@ export default {
     },
     reSend: function () {
       if (this.multipleSelection.length > 0) {
+        let ids = [];
+        for (let m = 0; m < this.multipleSelection.length; m++) {
+          ids.push(this.multipleSelection[0].id);
+        }
+        axios({
+          method: 'post',
+          url: 'http://localhost:8083/mgr/sendLog/resend',
+          params: {
+            ids: ids.join()
+          }
+        }).then(res => {
+          this.$message({
+            showClose: true,
+            message: res.data.data,
+            type: 'success'
+          });
+          this.$refs.tableSendLog.clearSelection();
+        }).catch(reason => {
+          this.$message({
+            message: reason,
+            type: 'error'
+          });
+        });
+      } else {
         this.$message({
-          message: this.multipleSelection[0].msgId,
-          type: 'success'
+          showClose: true,
+          message: '没有选择记录!',
+          type: 'warning'
         });
       }
     },
@@ -149,4 +195,5 @@ export default {
 <style lang="scss" scoped>
   .status-tag-radius{border-radius: 14px !important;}
   .el-pagination{background-color: #ffffff;}
+  .el-form-item{margin-bottom: 10px !important;}
 </style>

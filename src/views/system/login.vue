@@ -27,18 +27,32 @@
         </div>
       </div>
     </el-form>
+    <todayh v-bind:option="option" @titleChanged="updateTitle($event)" :title="title"></todayh>
   </div>
 </template>
 
 <script>
+import temp from '../../components/temp';
 export default {
   data () {
     return {
       loginForm: {
         username: 'admin',
         password: ''
-      }
+      },
+      option: {
+        tradeDesc: '出售',
+        typeDesc: '',
+        levelDesc: 'hello',
+        followTime: '2018',
+        salePrice: 3000,
+        rentPrice: 5000
+      },
+      title: '这是一个标题'
     };
+  },
+  components: {
+    'todayh': temp
   },
   methods: {
     submitForm (formName) {
@@ -67,6 +81,9 @@ export default {
       setTimeout(() => {
         self.$refs.mybox.style.color = 'blue';
       }, 2000);
+    },
+    updateTitle: function (title) {
+      this.title = title;
     }
   },
   mounted () {

@@ -1,10 +1,6 @@
 <template>
   <div>
-    <el-form :inline="true">
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">刷新</el-button>
-      </el-form-item>
-    </el-form>
+    <el-button type="primary" @click="onSubmit" class="btnRefresh">刷新</el-button>
     <el-table :data="queueStatusData" :height="tableHeight" border :style="{'width': '100%','height': tableHeight}">
       <el-table-column type="index" label="序号" width="50"></el-table-column>
       <el-table-column prop="queueName" label="队列名称" width="180"></el-table-column>
@@ -76,4 +72,5 @@ export default {
 </script>
 <style lang="scss" scoped>
   .status-tag-radius{border-radius: 12px !important;}
+  .btnRefresh{margin-bottom: 10px;}
 </style>
