@@ -10,7 +10,20 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/mq/*': {
+        target: 'http://localhost:8081',
+        secure: false
+      },
+      '/sk/*': {
+        target: 'http://localhost:8082',
+        secure: false
+      },
+      '/mgr/*': {
+        target: 'http://localhost:8083',
+        secure: false
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

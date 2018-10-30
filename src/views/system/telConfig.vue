@@ -91,20 +91,24 @@ export default {
   methods: {
     // 查询按钮
     query: function () {
-      this.$http.openApiAxios({
-        method: 'GET',
-        url: '/mgr/sendLog/data',
+      const loading = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      });
+      axios.get('http://localhost:8083/mgr/sendLog/data', {
         params: {
           dtStart: this.formInline.date1,
           dtEnd: this.formInline.date2,
           telId: this.formInline.telId,
           pageIndex: this.pageIndex,
           pageSize: this.pageSize
-        },
-        success: function (res) {
-          this.totalRow = res.data.page.totalRows;
-          this.sendLogData = res.data.rows;
         }
+      }).then(res => {
+        this.totalRow = res.data.data.page.totalRows;
+        this.sendLogData = res.data.data.rows;
+        loading.close();
       });
     },
     // 发送状态格式化

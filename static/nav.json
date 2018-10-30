@@ -27,6 +27,15 @@
   },
   {
     "FM": "FM0004",
+    "TEXT": "电文配置",
+    "URL": "/telConfig",
+    "ICON": "el-icon-news",
+    "POWER": true,
+    "LEAF": true,
+    "VALUE": []
+  },
+  {
+    "FM": "FM0005",
     "TEXT": "发送日志",
     "URL": "/sendLog",
     "ICON": "el-icon-document",
@@ -35,7 +44,7 @@
     "VALUE": []
   },
   {
-    "FM": "FM0005",
+    "FM": "FM0006",
     "TEXT": "接收日志",
     "URL": "/recvLog",
     "ICON": "el-icon-tickets",
@@ -44,7 +53,7 @@
     "VALUE": []
   },
   {
-    "FM": "FM0006",
+    "FM": "FM0007",
     "TEXT": "后台日志",
     "URL": "app.goods.gdsCls3",
     "ICON": "el-icon-time",

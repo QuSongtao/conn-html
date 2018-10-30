@@ -2,7 +2,7 @@ import axios from 'axios';
 // import Utils from "../utils/util.class";
 import {Loading, Message} from 'element-ui';
 
-let baseURL = process.env.BASE_API;
+// let baseURL = process.env.BASE_API;
 console.log(process.env.BASE_API);
 axios.defaults.headers['Content-Type'] = 'Content-Type: application/json';
 export default class Http {
@@ -25,32 +25,38 @@ export default class Http {
     }
     return o;
   }
-  static openApiAxios (params) {
-    params.data = this.filterNull(params.data);
+  static openApiAxios (request) {
+    request.data = this.filterNull(request.data);
     let _this = this;
     let _finally = '';
     let _beforeSuccess = '';
     let _success = '';
     let _error = '';
-    if (params.finally && params.finally !== null) {
-      _finally = params.finally;
+    if (request.finally && request.finally !== null) {
+      _finally = request.finally;
     }
-    if (params.success && params._uccess !== null) {
-      _success = params.success;
+    if (request.success && request._uccess !== null) {
+      _success = request.success;
     }
-    if (params.beforeSuccess && params.beforeSuccess !== null) {
-      _beforeSuccess = params.beforeSuccess;
+    if (request.beforeSuccess && request.beforeSuccess !== null) {
+      _beforeSuccess = request.beforeSuccess;
     }
-    if (params.error && params.error !== null) {
-      _error = params.error;
+    if (request.error && request.error !== null) {
+      _error = request.error;
     }
     this.LoadFlag++;
-    let loadinginstace = Loading.service();
+    let loadinginstace = Loading.service({
+      lock: true,
+      text: 'Loading',
+      spinner: 'el-icon-loading',
+      background: 'rgba(0, 0, 0, 0.7)'
+    });
     axios({
-      method: params.method || 'POST',
-      url: params.url,
-      data: params.data,
-      baseURL: baseURL,
+      method: request.method || 'POST',
+      url: request.url,
+      params: request.params,
+      data: request.data,
+      // baseURL: baseURL,
       withCredentials: false,
       timeout: 20000
     }).then((res) => {
@@ -61,30 +67,37 @@ export default class Http {
       if (typeof _beforeSuccess === 'function') {
         _beforeSuccess(res.data.data);
       }
-      if (res.data.successful) {
+      if (typeof _success === 'function') {
         _success(res.data);
-      } else {
-        // PP0008 PP0009 都直接取登录
-        if (res.data.bizCode.code === 'PP0008' || res.data.bizCode.code === 'PP0009') {
-          Message.error({
-            message: res.data.bizCode.info
-          });
-        } else {
-          if (_error) {
-            _error(res.data);
-          } else {
-            // 弹出错误消息
-            Message.error({
-              message: res.data.bizCode.info
-            });
-          }
-        }
+        loadinginstace.close();
       }
+      // if (res.data.successful) {
+      //   _success(res.data);
+      // } else {
+      //   // PP0008 PP0009 都直接取登录
+      //   if (res.data.bizCode.code === 'PP0008' || res.data.bizCode.code === 'PP0009') {
+      //     Message.error({
+      //       message: res.data.bizCode.info
+      //     });
+      //   } else {
+      //     if (_error) {
+      //       _error(res.data);
+      //     } else {
+      //       // 弹出错误消息
+      //       Message.error({
+      //         message: res.data.bizCode.info
+      //       });
+      //     }
+      //   }
+      // }
       if (typeof _finally === 'function') {
         _finally();
       }
     }).catch(function (err) {
       _this.LoadFlag = 0;
+      if (_error) {
+        _error(err);
+      }
       if (err) {
         let message = err.message;
         if (message.indexOf('Network') > -1) {

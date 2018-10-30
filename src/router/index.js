@@ -8,6 +8,7 @@ import Framework from '@/components/framework.vue'; // 主框架
 import Dashboard from '@/views/system/dashboard.vue'; // 系统首页
 import ChlStatus from '@/views/system/chlStatus.vue'; // // 通道状态
 import QueueStatus from '@/views/system/queueStatus.vue'; // 队列状态
+import TelConfig from '@/views/system/telConfig.vue'; // 电文配置
 import SendLog from '@/views/system/sendLog.vue'; // 系统发送日志
 import RecvLog from '@/views/system/recvLog.vue'; // 系统接收日志
 import MqLog from '@/views/system/mqLog.vue'; // 后端MQ日志
@@ -27,6 +28,7 @@ const router = new Router({
         {path: '/dashboard', name: 'dashboard', component: Dashboard},
         {path: '/chlStatus', name: 'chlStatus', component: ChlStatus},
         {path: '/queueStatus', name: 'queueStatus', component: QueueStatus},
+        {path: '/telConfig', name: 'telConfig', component: TelConfig},
         {path: '/sendLog', name: 'sendLog', component: SendLog},
         {path: '/recvLog', name: 'recvLog', component: RecvLog},
         {path: '/mqLog', name: 'mqLog', component: MqLog},

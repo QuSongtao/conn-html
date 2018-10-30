@@ -4,18 +4,18 @@
       <el-col :span="12" >
           <el-row class="row-lt">
             <el-col :span="4">
-              <i class="fa fa-database icon-size-lt"></i>
+              <i class="fa fa-database icon-size-lt" style="cursor: pointer" @click="getQmgrStatus"></i>
             </el-col>
             <el-col :span="4">
               <div class="status-title">IBM MQ</div>
             </el-col>
             <el-col :span="8" class="status-dsp">
-              <div class="qmgr-name"><span>TEST.QM</span></div>
+              <div class="qmgr-name"><span>{{qmgrName}}</span></div>
               <div class="qmgr-title"><span>队列管理器</span></div>
 
             </el-col>
             <el-col :span="8" class="status-dsp">
-              <div class="qmgr-name"><span class="qmgr-status">RUNNING</span></div>
+              <div class="qmgr-name"><span :class="qmgrStatus === 'DOWN' ? 'dataDanger' : 'dataNormal'">{{qmgrStatus}}</span></div>
               <div class="qmgr-title"><span>运行状态</span></div>
             </el-col>
           </el-row>
@@ -28,12 +28,12 @@
           </el-col>
           <el-col :span="8" class="status-dsp">
             <div class="sk-ip"><span>192.168.1.100(1415)</span></div>
-            <div class="sk-status"><span :class="hasError ? 'dataDanger': ''">DOWN</span></div>
+            <div class="sk-status"><span :class="serverStatus === 'DOWN' ? 'dataDanger': 'dataNormal'">{{serverStatus}}</span></div>
             <div class="sk-title"><span>服务端</span></div>
           </el-col>
           <el-col :span="8" class="status-dsp">
             <div class="sk-ip"><span>192.168.1.100(1416)</span></div>
-            <div class="sk-status"><span>RUNNING</span></div>
+            <div class="sk-status"><span :class="clientStatus === 'DOWN' ? 'dataDanger': 'dataNormal'">{{clientStatus}}</span></div>
             <div class="sk-title"><span>客户端</span></div>
           </el-col>
         </el-row>
@@ -97,7 +97,6 @@
 <script>
 import temp from '../../components/temp';
 import _ from 'lodash';
-import axios from 'axios';
 export default {
   data () {
     return {
@@ -105,7 +104,11 @@ export default {
       hasError: true,
       logHeight: document.body.clientHeight - 285,
       logHgt: document.body.clientHeight - 335,
-      mqLog: ''
+      mqLog: '',
+      qmgrName: '未知',
+      qmgrStatus: '未知',
+      serverStatus: 'DOWN',
+      clientStatus: 'RUNNING'
     };
   },
   components: {
@@ -116,15 +119,31 @@ export default {
       this.hasError = this.hasError !== true;
     },
     getMqLog: function () {
-      axios.get('http://localhost:8083/log/lastNLines', {
+      const that = this;
+      this.$http.openApiAxios({
+        method: 'GET',
+        url: '/mgr/log/lastNLines',
         params: {
           pathIndex: 'MGRO',
           fileName: 'out.log'
+        },
+        success: function (res) {
+          that.mqLog = res;
+          let divMqArea = document.getElementById('pane-0');
+          divMqArea.scrollTop = divMqArea.scrollHeight;
         }
-      }).then(res => {
-        this.mqLog = res.data;
-        let divMqArea = document.getElementById('pane-0');
-        divMqArea.scrollTop = divMqArea.scrollHeight;
+      });
+    },
+    getQmgrStatus: function () {
+      const that = this;
+      this.$http.openApiAxios({
+        method: 'GET',
+        url: '/mq/qmgr/status',
+        params: {},
+        success: function (res) {
+          that.qmgrName = res.qmgrName;
+          that.qmgrStatus = res.status;
+        }
       });
     }
   },
@@ -139,6 +158,7 @@ export default {
       that.logHgt = document.body.clientHeight - 335;
     }, 400);
     this.getMqLog();
+    this.getQmgrStatus();
   }
 };
 </script>
@@ -158,11 +178,11 @@ export default {
   .row-lt .status-dsp .qmgr-title span{font-size: 14px; color: #ffffff}
   .row-lt .status-dsp .qmgr-name{margin-top: 18px;}
   .row-lt .status-dsp .qmgr-name span{font-size: 28px;font-weight:bold;}
-  .row-lt .status-dsp .qmgr-name .qmgr-status{color: lawngreen;}
+  /*.row-lt .status-dsp .qmgr-name .qmgr-status{color: lawngreen;}*/
   .row-lt .status-dsp .sk-ip{text-align: center;color: #ffffff;margin-top: 10px;}
   .row-lt .status-dsp .sk-ip span{font-size: 12px;}
   .row-lt .status-dsp .sk-status{margin-top: 1px;text-align: center;color: #ffffff;}
-  .row-lt .status-dsp .sk-status span{font-size: 28px;font-weight: bold;color: lawngreen;}
+  .row-lt .status-dsp .sk-status span{font-size: 28px;font-weight: bold;}
   .row-lt .status-dsp .sk-title{text-align: center;margin-top: 1px;}
   .row-lt .status-dsp .sk-title span{font-size: 14px; color: #ffffff}
   .row-lt .status-title{margin-top: 40px; font-size: 16px;}
@@ -176,7 +196,8 @@ export default {
   .row-rt .data-dsp .data-content .data-number{font-size: 30px;font-weight: bold;margin-left: 5px; color: lawngreen}
   .row-rt .data-dsp .data-content .data-number-old{font-size: 30px;font-weight: bold;margin-left: 5px; color: gainsboro;}
   /*根据变量改变状态字体颜色*/
-  .dataDanger{ color: orangered !important;}
+  .dataDanger{ color: orangered;}
+  .dataNormal{ color: lawngreen;}
   .image {
     width: 100%;
     display: block;
