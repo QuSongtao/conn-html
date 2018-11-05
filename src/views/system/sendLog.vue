@@ -91,6 +91,7 @@ export default {
   methods: {
     // 查询按钮
     query: function () {
+      let that = this;
       this.$http.openApiAxios({
         method: 'GET',
         url: '/mgr/sendLog/data',
@@ -102,8 +103,8 @@ export default {
           pageSize: this.pageSize
         },
         success: function (res) {
-          this.totalRow = res.data.page.totalRows;
-          this.sendLogData = res.data.rows;
+          that.totalRow = res.data.page.totalRows;
+          that.sendLogData = res.data.rows;
         }
       });
     },
@@ -170,12 +171,12 @@ export default {
     },
     handleSizeChange: function (val) {
       this.pageSize = val;
-      this.onSubmit();
+      this.query();
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange: function (val) {
       this.pageIndex = val;
-      this.onSubmit();
+      this.query();
       console.log(`当前页: ${val}`);
     }
   },
