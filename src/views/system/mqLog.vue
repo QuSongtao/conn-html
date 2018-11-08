@@ -2,8 +2,8 @@
   <div>
     <el-button-group>
       <el-button type="primary" @click="getMqLogFiles">发送日志</el-button>
-      <el-button type="primary">接收日志</el-button>
-      <el-button type="primary">系统日志</el-button>
+      <el-button>接收日志</el-button>
+      <el-button>系统日志</el-button>
     </el-button-group>
     <el-row>
       <el-col :span="6">

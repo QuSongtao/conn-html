@@ -161,7 +161,7 @@ export default {
       const that = this;
       this.$http.openApiAxios({
         method: 'GET',
-        url: '/mq/qmgr/status',
+        url: '/mq/status/qmgr',
         params: {},
         success: function (res) {
           that.qmgrName = res.qmgrName;
