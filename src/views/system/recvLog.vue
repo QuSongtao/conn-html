@@ -4,13 +4,13 @@
       <el-form-item label="接收时间：" required>
         <el-col :span="11">
           <el-form-item prop="date1">
-            <el-date-picker type="date" placeholder="选择起始日期" v-model="formInline.date1" style="width: 150px;"></el-date-picker>
+            <el-date-picker type="date" placeholder="选择起始日期" value-format="yyyy-MM-dd" v-model="formInline.date1" style="width: 150px;"></el-date-picker>
           </el-form-item>
         </el-col>
         <el-col class="line" :span="2" style="text-align: center">-</el-col>
         <el-col :span="11">
           <el-form-item prop="date2">
-            <el-date-picker type="date" placeholder="选择终止日期" v-model="formInline.date2" style="width: 150px;"></el-date-picker>
+            <el-date-picker type="date" placeholder="选择终止日期" value-format="yyyy-MM-dd" v-model="formInline.date2" style="width: 150px;"></el-date-picker>
           </el-form-item>
         </el-col>
       </el-form-item>
@@ -25,6 +25,7 @@
     <el-table :data="gridData"
               :height="tableHeight" border
               :style="{'width': '100%','height': tableHeight}"
+              ref="tableRecvLog"
               @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="40"></el-table-column>
       <el-table-column type="index" label="序号" width="60"></el-table-column>
@@ -79,9 +80,9 @@ export default {
       dialogVisible: false,
       tableHeight: document.body.clientHeight - 150,
       formInline: {
-        telId: 'A',
-        date1: new Date(),
-        date2: new Date()
+        telId: '',
+        date1: this.$util.formatDate(new Date()),
+        date2: this.$util.formatDate(new Date())
       },
       gridData: []
     };
@@ -102,7 +103,7 @@ export default {
         },
         success: function (res) {
           that.totalRow = res.data.page.totalRows;
-          that.sendLogData = res.data.rows;
+          that.gridData = res.data.rows;
         }
       });
     },
@@ -128,9 +129,9 @@ export default {
         },
         success: function (res) {
           that.msgText = res.data;
+          that.dialogVisible = true;
         }
       });
-      this.dialogVisible = true;
     },
     handleSelectionChange: function (val) {
       this.multipleSelection = val;
@@ -140,7 +141,7 @@ export default {
         let ids = [];
         let that = this;
         for (let m = 0; m < this.multipleSelection.length; m++) {
-          ids.push(this.multipleSelection[0].id);
+          ids.push(this.multipleSelection[m].id);
         }
         this.$http.openApiAxios({
           method: 'POST',
@@ -154,7 +155,7 @@ export default {
               message: res.data,
               type: 'success'
             });
-            that.$refs.tableSendLog.clearSelection();
+            that.$refs.tableRecvLog.clearSelection();
           }
         });
       } else {

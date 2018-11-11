@@ -51,7 +51,7 @@ export default {
       show: false,
       tableHeight: document.body.clientHeight - 150,
       formInline: {
-        region: 'A'
+        region: null
       },
       pageIndex: 1,
       pageSize: 20,
@@ -66,7 +66,7 @@ export default {
         method: 'GET',
         url: '/mq/status/channel',
         params: {
-          transferType: this.formInline.region,
+          transferType: this.formInline.region === 'A' ? null : this.formInline.region,
           pageIndex: this.pageIndex,
           pageSize: this.pageSize
         },

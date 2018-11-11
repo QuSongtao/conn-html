@@ -102,7 +102,7 @@ export default {
       let that = this;
       this.$http.openApiAxios({
         method: 'GET',
-        url: '/mgr/tel/data',
+        url: '/mgr/tel',
         params: {
           telId: this.formInline.telId,
           pageIndex: this.pageIndex,

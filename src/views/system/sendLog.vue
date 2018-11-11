@@ -56,7 +56,7 @@
       title="消息内容"
       :visible.sync="dialogVisible"
       width="30%">
-      <div>{{msgText}}</div>
+      <textarea style="width: 99%; border: 1px solid #cccccc">{{msgText}}</textarea>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -128,9 +128,9 @@ export default {
         },
         success: function (res) {
           that.msgText = res.data;
+          that.dialogVisible = true;
         }
       });
-      this.dialogVisible = true;
     },
     handleSelectionChange: function (val) {
       this.multipleSelection = val;
@@ -140,7 +140,7 @@ export default {
         let ids = [];
         let that = this;
         for (let m = 0; m < this.multipleSelection.length; m++) {
-          ids.push(this.multipleSelection[0].id);
+          ids.push(this.multipleSelection[m].id);
         }
         this.$http.openApiAxios({
           method: 'POST',

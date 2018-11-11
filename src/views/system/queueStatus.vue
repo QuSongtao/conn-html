@@ -54,9 +54,8 @@ export default {
       let that = this;
       this.$http.openApiAxios({
         method: 'GET',
-        url: '/mq/status/channel',
+        url: '/mq/status/queue',
         params: {
-          transferType: this.formInline.region,
           pageIndex: this.pageIndex,
           pageSize: this.pageSize
         },
