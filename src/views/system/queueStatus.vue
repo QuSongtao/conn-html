@@ -86,5 +86,6 @@ export default {
 </script>
 <style lang="scss" scoped>
   .status-tag-radius{border-radius: 14px !important;}
+  .el-pagination{background-color: #ffffff;}
   .el-form-item{margin-bottom: 10px !important;}
 </style>

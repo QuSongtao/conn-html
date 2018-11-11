@@ -18,22 +18,24 @@
         <el-input v-model="formInline.telId" placeholder="输入电文ID" clearable style="width: 160px;"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
-        <el-button type="primary" plain @click="reSend">重接</el-button>
+        <el-button type="primary" @click="query">查询</el-button>
+        <el-button type="primary" plain @click="reDeal">重接</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="sendLogData"
+    <el-table :data="gridData"
               :height="tableHeight" border
               :style="{'width': '100%','height': tableHeight}"
               @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="40"></el-table-column>
       <el-table-column type="index" label="序号" width="60"></el-table-column>
+      <el-table-column type="id" label="主键" width="60" v-if="show"></el-table-column>
       <el-table-column prop="telId" label="电文ID" width="120"></el-table-column>
       <el-table-column prop="telType" label="电文类型" width="80"></el-table-column>
-      <el-table-column prop="sendFlag" label="处理状态" width="180" v-if="show"></el-table-column>
-      <el-table-column prop="createTime" label="插入时间" width="180"></el-table-column>
-      <el-table-column prop="sendTime" label="接收时间" width="180"></el-table-column>
-      <el-table-column prop="msgId" label="消息ID" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="recvTime" label="接收时间" width="180"></el-table-column>
+      <el-table-column prop="dealFlag" label="处理状态" width="180" v-if="show"></el-table-column>
+      <el-table-column prop="dealTime" label="处理时间" width="180"></el-table-column>
+      <el-table-column prop="des" label="处理结果" width="180"></el-table-column>
+      <el-table-column prop="msgId" label="消息ID" v-if="show"></el-table-column>
       <el-table-column label="操作" fixed="right">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleInfo(scope.$index, scope.row)">消息详情</el-button>
@@ -44,18 +46,17 @@
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[100, 200, 300, 400]"
-      :page-size="100"
+      :current-page="pageIndex"
+      :page-sizes="[10, 20, 50, 100]"
+      :page-size="pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="400">
+      :total="totalRow">
     </el-pagination>
     <el-dialog
-      title="提示"
+      title="消息内容"
       :visible.sync="dialogVisible"
-      width="30%"
-      :before-close="handleClose">
-      <span>{{msgId}}</span>
+      width="30%">
+      <div>{{msgText}}</div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -71,8 +72,10 @@ export default {
     return {
       show: false,
       multipleSelection: [],
-      currentPage4: 4,
-      msgId: '',
+      pageIndex: 1,
+      pageSize: 20,
+      totalRow: 0,
+      msgText: '',
       dialogVisible: false,
       tableHeight: document.body.clientHeight - 150,
       formInline: {
@@ -80,95 +83,95 @@ export default {
         date1: new Date(),
         date2: new Date()
       },
-      sendLogData: [{
-        telId: 'LZSERP00001',
-        telType: 'MQ',
-        sendFlag: '已发送',
-        createTime: '2018-10-09 10:10:10',
-        sendTime: '2018-10-09 10:10:10',
-        msgId: '938e7b70-b836-11e8-b9fc-02420a000055'
-      }, {
-        telId: 'LZSERP00001',
-        telType: 'MQ',
-        sendFlag: '已发送',
-        createTime: '2018-10-09 10:10:10',
-        sendTime: '2018-10-09 10:10:10',
-        msgId: '938e7b70-b836-11e8-b9fc-02420a000055'
-      }, {
-        telId: 'LZSERP00001',
-        telType: 'MQ',
-        sendFlag: '已发送',
-        createTime: '2018-10-09 10:10:10',
-        sendTime: '2018-10-09 10:10:10',
-        msgId: '938e7b70-b836-11e8-b9fc-02420a000055'
-      }, {
-        telId: 'LZSERP00001',
-        telType: 'MQ',
-        sendFlag: '已发送',
-        createTime: '2018-10-09 10:10:10',
-        sendTime: '2018-10-09 10:10:10',
-        msgId: '938e7b70-b836-11e8-b9fc-02420a000055'
-      }, {
-        telId: 'LZSERP00001',
-        telType: 'MQ',
-        sendFlag: '已发送',
-        createTime: '2018-10-09 10:10:10',
-        sendTime: '2018-10-09 10:10:10',
-        msgId: '938e7b70-b836-11e8-b9fc-02420a000055'
-      }, {
-        telId: 'LZSERP00001',
-        telType: 'MQ',
-        sendFlag: '已发送',
-        createTime: '2018-10-09 10:10:10',
-        sendTime: '2018-10-09 10:10:10',
-        msgId: '938e7b70-b836-11e8-b9fc-02420a000055'
-      }, {
-        telId: 'LZSERP00001',
-        telType: 'MQ',
-        sendFlag: '已发送',
-        createTime: '2018-10-09 10:10:10',
-        sendTime: '2018-10-09 10:10:10',
-        msgId: '938e7b70-b836-11e8-b9fc-02420a000055'
-      }]
+      gridData: []
     };
   },
   methods: {
-    onSubmit: function () {
-      this.$message({
-        message: '恭喜你，成功消息',
-        type: 'success'
+    // 查询按钮
+    query: function () {
+      let that = this;
+      this.$http.openApiAxios({
+        method: 'GET',
+        url: '/mgr/recvLog/data',
+        params: {
+          dtStart: this.formInline.date1,
+          dtEnd: this.formInline.date2,
+          telId: this.formInline.telId,
+          pageIndex: this.pageIndex,
+          pageSize: this.pageSize
+        },
+        success: function (res) {
+          that.totalRow = res.data.page.totalRows;
+          that.sendLogData = res.data.rows;
+        }
       });
+    },
+    // 发送状态格式化
+    statusFormat: function (row, column, cellValue, index) {
+      switch (cellValue) {
+        case '0':
+          return '未发送';
+        case '1':
+          return '已发送';
+        default:
+          return '未知';
+      }
     },
     handleInfo: function (index, row) {
       this.msgId = row.msgId;
+      let that = this;
+      this.$http.openApiAxios({
+        method: 'GET',
+        url: '/mgr/recvLog/message',
+        params: {
+          msgId: row.msgId
+        },
+        success: function (res) {
+          that.msgText = res.data;
+        }
+      });
       this.dialogVisible = true;
-    },
-    handleClose: function (done) {
-      this.$confirm('确认关闭？')
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
-    },
-    closed: function () {
-      console.log('关闭后回调yes!');
     },
     handleSelectionChange: function (val) {
       this.multipleSelection = val;
     },
-    reSend: function () {
+    reDeal: function () {
       if (this.multipleSelection.length > 0) {
+        let ids = [];
+        let that = this;
+        for (let m = 0; m < this.multipleSelection.length; m++) {
+          ids.push(this.multipleSelection[0].id);
+        }
+        this.$http.openApiAxios({
+          method: 'POST',
+          url: '/mgr/recvLog/reDeal',
+          params: {
+            ids: ids.join()
+          },
+          success: function (res) {
+            that.$message({
+              showClose: true,
+              message: res.data,
+              type: 'success'
+            });
+            that.$refs.tableSendLog.clearSelection();
+          }
+        });
+      } else {
         this.$message({
-          message: this.multipleSelection[0].msgId,
-          type: 'success'
+          showClose: true,
+          message: '没有选择记录!',
+          type: 'warning'
         });
       }
     },
     handleSizeChange: function (val) {
-      console.log(`每页 ${val} 条`);
+      this.pageSize = val;
+      this.query();
     },
     handleCurrentChange: function (val) {
-      console.log(`当前页: ${val}`);
+      this.pageIndex = val;
+      this.query();
     }
   },
   mounted: function () {

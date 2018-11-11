@@ -80,7 +80,7 @@ export default {
       show: false,
       multipleSelection: [],
       pageIndex: 1,
-      pageSize: 10,
+      pageSize: 20,
       totalRow: 0,
       msgId: '',
       dialogVisible: false,

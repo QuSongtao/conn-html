@@ -53,11 +53,10 @@
       :total="totalRow">
     </el-pagination>
     <el-dialog
-      title="提示"
+      title="消息内容"
       :visible.sync="dialogVisible"
-      width="30%"
-      :before-close="handleClose">
-      <span>{{msgId}}</span>
+      width="30%">
+      <div>{{msgText}}</div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -74,9 +73,9 @@ export default {
       show: false,
       multipleSelection: [],
       pageIndex: 1,
-      pageSize: 10,
+      pageSize: 20,
       totalRow: 0,
-      msgId: '',
+      msgText: '',
       dialogVisible: false,
       tableHeight: document.body.clientHeight - 150,
       formInline: {
@@ -120,17 +119,18 @@ export default {
     },
     handleInfo: function (index, row) {
       this.msgId = row.msgId;
+      let that = this;
+      this.$http.openApiAxios({
+        method: 'GET',
+        url: '/mgr/sendLog/message',
+        params: {
+          msgId: row.msgId
+        },
+        success: function (res) {
+          that.msgText = res.data;
+        }
+      });
       this.dialogVisible = true;
-    },
-    handleClose: function (done) {
-      this.$confirm('确认关闭？')
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
-    },
-    closed: function () {
-      console.log('关闭后回调yes!');
     },
     handleSelectionChange: function (val) {
       this.multipleSelection = val;
@@ -151,7 +151,7 @@ export default {
           success: function (res) {
             that.$message({
               showClose: true,
-              message: res.data.data,
+              message: res.data,
               type: 'success'
             });
             that.$refs.tableSendLog.clearSelection();
@@ -168,12 +168,10 @@ export default {
     handleSizeChange: function (val) {
       this.pageSize = val;
       this.query();
-      console.log(`每页 ${val} 条`);
     },
     handleCurrentChange: function (val) {
       this.pageIndex = val;
       this.query();
-      console.log(`当前页: ${val}`);
     }
   },
   mounted: function () {
