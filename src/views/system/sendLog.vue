@@ -67,7 +67,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import _ from 'lodash';
 export default {
   data () {
@@ -139,27 +138,24 @@ export default {
     reSend: function () {
       if (this.multipleSelection.length > 0) {
         let ids = [];
+        let that = this;
         for (let m = 0; m < this.multipleSelection.length; m++) {
           ids.push(this.multipleSelection[0].id);
         }
-        axios({
-          method: 'post',
-          url: 'http://localhost:8083/mgr/sendLog/resend',
+        this.$http.openApiAxios({
+          method: 'POST',
+          url: '/mgr/sendLog/resend',
           params: {
             ids: ids.join()
+          },
+          success: function (res) {
+            that.$message({
+              showClose: true,
+              message: res.data.data,
+              type: 'success'
+            });
+            that.$refs.tableSendLog.clearSelection();
           }
-        }).then(res => {
-          this.$message({
-            showClose: true,
-            message: res.data.data,
-            type: 'success'
-          });
-          this.$refs.tableSendLog.clearSelection();
-        }).catch(reason => {
-          this.$message({
-            message: reason,
-            type: 'error'
-          });
         });
       } else {
         this.$message({
