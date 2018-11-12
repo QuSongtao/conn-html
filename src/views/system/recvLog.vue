@@ -57,7 +57,7 @@
       title="消息内容"
       :visible.sync="dialogVisible"
       width="30%">
-      <div>{{msgText}}</div>
+      <textarea style="width: 99%; border: 1px solid #cccccc" v-model="msgText"></textarea>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
