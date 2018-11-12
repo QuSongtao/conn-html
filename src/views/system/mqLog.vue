@@ -1,141 +1,106 @@
 <template>
   <div>
+    <!--<el-radio-group v-model="logRadio">-->
+      <!--<el-radio-button label="发送日志" @click="getSendLog"></el-radio-button>-->
+      <!--<el-radio-button label="接收日志" @click="getRecvLog"></el-radio-button>-->
+      <!--<el-radio-button label="系统日志" @click="getSysLog"></el-radio-button>-->
+    <!--</el-radio-group>-->
     <el-button-group>
-      <el-button type="primary" @click="getMqLogFiles">发送日志</el-button>
-      <el-button>接收日志</el-button>
-      <el-button>系统日志</el-button>
+      <el-button type="primary" @click="getSendLog">发送日志</el-button>
+      <el-button type="primary" @click="getRecvLog">接收日志</el-button>
+      <el-button type="primary" @click="getSysLog">系统日志</el-button>
     </el-button-group>
     <el-row>
       <el-col :span="6">
-        <el-table :data="sendLogData"
+        <el-table :data="gridData"
                   :height="tableHeight" border
                   :style="{'width': '100%','height': tableHeight}"
-                  @selection-change="handleSelectionChange"
-                  @row-click="rowClick">
+                  @row-dblclick="rowDbClick">
           <el-table-column prop="fileName" label="文件名称" width="180" show-overflow-tooltip></el-table-column>
           <el-table-column prop="fileSize" label="大小" width="70"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleInfo(scope.$index, scope.row)">下载</el-button>
+              <el-button size="mini" @click="download(scope.$index, scope.row)">下载</el-button>
             </template>
           </el-table-column>
         </el-table>
       </el-col>
       <el-col :span="18" :style="{'background-color': '#004444','height': tableHeight + 'px'}" class="logTextArea">
-        <div v-html="logText"></div>
+        <textarea v-html="logText" class="logarea" :style="{'height': tableHeight + 'px'}"></textarea>
       </el-col>
     </el-row>
-    <el-dialog
-      title="提示"
-      :visible.sync="dialogVisible"
-      width="30%"
-      :before-close="handleClose">
-      <span>{{msgId}}</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
 <script>
 import _ from 'lodash';
-import axios from 'axios';
 export default {
   data () {
     return {
-      logText: '1131312',
-      multipleSelection: [],
-      currentPage4: 4,
-      msgId: '',
-      dialogVisible: false,
+      logText: '',
       tableHeight: document.body.clientHeight - 120,
-      formInline: {
-        telId: 'A',
-        date1: new Date(),
-        date2: new Date()
-      },
-      sendLogData: [{
-        fileName: 'recv_2018-10-08.0.log',
-        fileSize: '10.8M'
-      }, {
-        fileName: '2018-10-08.log',
-        fileSize: '10.8M'
-      }, {
-        fileName: '2018-10-08.log',
-        fileSize: '10.8M'
-      }, {
-        fileName: '2018-10-08.log',
-        fileSize: '10.8M'
-      }, {
-        fileName: '2018-10-08.log',
-        fileSize: '10.8M'
-      }, {
-        fileName: '2018-10-08.log',
-        fileSize: '10.8M'
-      }, {
-        fileName: '2018-10-08.log',
-        fileSize: '10.8M'
-      }]
+      pathIndex: '',
+      gridData: []
     };
   },
   methods: {
-    onSubmit: function () {
-      this.$message({
-        message: '恭喜你，成功消息',
-        type: 'success'
+    getSendLog: function () {
+      this.pathIndex = 'MQS';
+      this.getLogFiles();
+    },
+    getRecvLog: function () {
+      this.pathIndex = 'MQR';
+      this.getLogFiles();
+    },
+    getSysLog: function () {
+      this.pathIndex = 'MQO';
+      this.getLogFiles();
+    },
+    download: function (index, row) {
+      this.$http.openApiAxios({
+        url: '/mgr/log/download',
+        method: 'GET',
+        params: {
+          pathIndex: this.pathIndex,
+          fileName: row.fileName
+        },
+        responseType: 'blob',
+        success: function (res) {
+          let url = window.URL.createObjectURL(new Blob([res]));
+          let link = document.createElement('a');
+          link.style.display = 'none';
+          link.href = url;
+          link.setAttribute('download', row.fileName);
+          document.body.appendChild(link);
+          link.click();
+        }
       });
     },
-    handleInfo: function (index, row) {
-      this.msgId = row.msgId;
-      this.dialogVisible = true;
-    },
-    handleClose: function (done) {
-      this.$confirm('确认关闭？')
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
-    },
-    closed: function () {
-      console.log('关闭后回调yes!');
-    },
-    handleSelectionChange: function (val) {
-      this.multipleSelection = val;
-    },
-    reSend: function () {
-      if (this.multipleSelection.length > 0) {
-        this.$message({
-          message: this.multipleSelection[0].msgId,
-          type: 'success'
-        });
-      }
-    },
-    handleSizeChange: function (val) {
-      console.log(`每页 ${val} 条`);
-    },
-    handleCurrentChange: function (val) {
-      console.log(`当前页: ${val}`);
-    },
-    rowClick: function (row, event, column) {
-      // this.$message({
-      //   message: row.fileName,
-      //   type: 'success'
-      // });
-      const loading = this.$loading({
-        lock: true,
-        text: '加载中...',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
+    rowDbClick: function (row, event, column) {
+      let that = this;
+      this.$http.openApiAxios({
+        url: '/mgr/log/content',
+        method: 'GET',
+        params: {
+          pathIndex: this.pathIndex,
+          fileName: row.fileName
+        },
+        success: function (res) {
+          that.logText = res;
+        }
       });
-      setTimeout(() => {
-        loading.close();
-      }, 2000);
     },
-    getMqLogFiles: function () {
-      axios.get('http://localhost:8081/mq/log/send/files').then(res => {
-        this.sendLogData = res.data;
+    getLogFiles: function () {
+      let that = this;
+      this.$http.openApiAxios({
+        url: '/mgr/log/files',
+        method: 'GET',
+        params: {
+          pathIndex: this.pathIndex
+        },
+        success: function (res) {
+          that.gridData = res;
+        }
       });
     }
   },
@@ -145,6 +110,7 @@ export default {
     window.onresize = _.debounce(() => {
       that.tableHeight = document.body.clientHeight - 120;
     }, 400);
+    this.getSendLog();
   }
 };
 </script>
@@ -153,14 +119,18 @@ export default {
   .el-button-group{margin-bottom: 10px;}
   .el-pagination{background-color: #ffffff;}
   .logTextArea{
-    overflow-y: auto;
-    overflow-x: auto;
-    white-space: nowrap;
-    color: #fabe5f;
     font-family: 'Consolas';
     font-size: 12px;
     padding-left: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+  }
+  .logarea{
+    width: 100%;
+    height: auto;
+    overflow-y: auto;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 0;
+    border: 0 solid #cccccc;
+    resize: none;
   }
 </style>
