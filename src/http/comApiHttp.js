@@ -58,7 +58,8 @@ export default class Http {
       data: request.data,
       // baseURL: baseURL,
       withCredentials: false,
-      timeout: 20000
+      timeout: 20000,
+      responseType: request.responseType
     }).then((res) => {
       this.LoadFlag--;
       if (this.LoadFlag === 0) {

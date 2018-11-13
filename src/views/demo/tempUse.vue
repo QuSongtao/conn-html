@@ -2,61 +2,92 @@
   <div class="login-container">
     <el-form class="login-form" auto-complete="on" label-position="left" :model="loginForm" ref="loginForm">
       <h3 class="title">号角通信系统登录</h3>
-      <el-form-item prop="username" :rules="[{ required: true, message: '请输入账号!', trigger: 'blur' }]">
+      <el-form-item prop="username"
+                    :rules="[{ required: true, message: '请输入账号!', trigger: 'blur' }]"
+      >
         <el-input v-model="loginForm.username" type="text" auto-complete="on" placeholder="请输入登录用户名" clearable >
           <template slot="prepend">账    号：</template>
         </el-input>
       </el-form-item>
-      <el-form-item prop="password" :rules="[{ required: true, message: '密码不能为空!', trigger: 'change' }]">
-        <el-input v-model="loginForm.password" type="password" auto-complete="on" placeholder="请输入登录密码" @keyup.enter.native="login" clearable>
+      <el-form-item prop="password"
+                    :rules="[{ required: true, message: '密码不能为空!', trigger: 'change' }]"
+      >
+        <el-input v-model="loginForm.password" type="password" auto-complete="on" placeholder="请输入登录密码" @keyup.enter.native="handleLogin" clearable>
           <template slot="prepend">口    令：</template>
         </el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" style="width:100%;" @click="login">登录</el-button>
+        <el-button type="primary" style="width:100%;" @click="submitForm('loginForm')">
+          登录
+        </el-button>
       </el-form-item>
+      <div>
+        <div id="box" ref="mybox">
+          DEMO
+        </div>
+      </div>
     </el-form>
+    <todayh v-bind:option="option" @titleChanged="updateTitle($event)" :title="title"></todayh>
   </div>
 </template>
 
 <script>
+import temp from '../../components/temp';
 export default {
   data () {
     return {
       loginForm: {
         username: 'admin',
         password: ''
-      }
+      },
+      option: {
+        tradeDesc: '出售',
+        typeDesc: '',
+        levelDesc: 'hello',
+        followTime: '2018',
+        salePrice: 3000,
+        rentPrice: 5000
+      },
+      title: '这是一个标题'
     };
   },
+  components: {
+    'todayh': temp
+  },
   methods: {
-    login () {
-      let that = this;
-      this.$refs['loginForm'].validate((valid) => {
+    submitForm (formName) {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$http.openApiAxios({
-            url: '/mgr/login',
-            method: 'POST',
-            params: {
-              username: this.loginForm.username,
-              password: this.loginForm.password
-            },
-            success: function (res) {
-              if (res.meta.code === 1) {
-                that.$message.success(res.data);
-                that.$router.push('/');
-              } else {
-                that.$message.error(res.meta.message);
-              }
-            }
+          this.$message({
+            message: '恭喜你，成功消息',
+            type: 'success'
           });
+          this.login();
         } else {
+          this.$message.error('失败消息');
           return false;
         }
       });
+    },
+    login () {
+      this.$router.push('/');
+    },
+    handleLogin () {
+      this.$router.push('/');
+    },
+    init () {
+      const self = this;
+      this.$refs.mybox.style.color = 'red';
+      setTimeout(() => {
+        self.$refs.mybox.style.color = 'blue';
+      }, 2000);
+    },
+    updateTitle: function (title) {
+      this.title = title;
     }
   },
   mounted () {
+    this.init();
   }
 };
 </script>
