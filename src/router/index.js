@@ -22,7 +22,7 @@ const router = new Router({
     {
       path: '/',
       name: 'common',
-      redirect: '/dashboard',
+      redirect: '/login',
       component: Framework,
       children: [
         {path: '/dashboard', name: 'dashboard', component: Dashboard},

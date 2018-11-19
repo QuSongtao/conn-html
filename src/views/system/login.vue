@@ -43,8 +43,9 @@ export default {
             },
             success: function (res) {
               if (res.meta.code === 1) {
-                that.$message.success(res.data);
-                that.$router.push('/');
+                window.sessionStorage.setItem('token', res.data.token);
+                that.$message.success(res.data.message);
+                that.$router.push('/dashboard');
               } else {
                 that.$message.error(res.meta.message);
               }

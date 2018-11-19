@@ -115,6 +115,7 @@ export default {
       this.$router.push(url); // 用go刷新
     },
     logout () {
+      window.sessionStorage.clear();
       this.$router.push('/login');
     }
   },

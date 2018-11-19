@@ -1,4 +1,5 @@
 import axios from 'axios';
+import router from '../router';
 // import Utils from "../utils/util.class";
 import {Loading, Message} from 'element-ui';
 
@@ -26,6 +27,10 @@ export default class Http {
     return o;
   }
   static openApiAxios (request) {
+    if (!window.sessionStorage.getItem('token') && request.url !== '/mgr/login') {
+      router.push('/login');
+      return;
+    }
     request.data = this.filterNull(request.data);
     let _this = this;
     let _finally = '';

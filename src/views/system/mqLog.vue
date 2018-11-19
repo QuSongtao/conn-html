@@ -26,7 +26,8 @@
         </el-table>
       </el-col>
       <el-col :span="18" :style="{'background-color': '#004444','height': tableHeight + 'px'}" class="logTextArea">
-        <textarea v-html="logText" class="logarea" :style="{'height': tableHeight + 'px'}"></textarea>
+        <!--<textarea v-model="logText" class="logarea" :style="{'height': tableHeight + 'px'}" wrap="hard"></textarea>-->
+        <textarea v-model="logText" class="logarea" :style="{'height': tableHeight + 'px'}"></textarea>
       </el-col>
     </el-row>
   </div>
@@ -132,5 +133,8 @@ export default {
     padding: 0;
     border: 0 solid #cccccc;
     resize: none;
+  }
+  textarea {
+    cs:expression(this.readOnly=true);
   }
 </style>
