@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :inline="true" :model="formInline">
+    <el-form :inline="true">
       <el-form-item>
         <el-button type="primary" @click="refresh">刷新</el-button>
       </el-form-item>

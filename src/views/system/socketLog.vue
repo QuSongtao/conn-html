@@ -13,7 +13,7 @@
     <el-row>
       <el-col :span="6">
         <el-table :data="gridData"
-                  :height="tableHeight" border
+                  :height="tableHeight"
                   :style="{'width': '100%','height': tableHeight}"
                   @row-dblclick="rowDbClick">
           <el-table-column prop="fileName" label="文件名称" width="180" show-overflow-tooltip></el-table-column>

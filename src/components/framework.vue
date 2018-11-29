@@ -45,22 +45,12 @@
           <i class="iconfont icon-menuunfold" v-show="collapsed"></i>
         </div>
         <!-- 导航菜单 加上router属性可以对el-submenu所配置的:index直接路由 -->
-        <el-menu :default-active="defaultActiveIndex" router @open="handleOpen" @close="handleClose" :collapse="collapsed"
+        <el-menu :default-active="defaultActiveIndex" class="el-menu-vertical"
+                 router @open="handleOpen" @close="handleClose" :collapse="collapsed"
+                 background-color="#333744"
                  text-color="#fff"
-                 active-text-color="#2587ED">
-          <template v-for="(item,index) in navData" v-if="item.POWER">
-            <el-submenu v-if = "!item.LEAF" :index ="index+''" v-bind:key="item.FM" >
-              <template slot="title" class="el-submenu__title">
-                <i :class="item.ICON"></i><span>{{item.TEXT}}</span>
-              </template>
-              <el-menu-item v-for="val in item.VALUE" :index="val.URL" :key="val.URL">
-                <span slot="title">{{val.TEXT}}</span></el-menu-item>
-            </el-submenu>
-            <el-menu-item v-else-if="item.LEAF" :index="item.URL" :key="item.FM">
-              <!--:class="$route.path==item.URL?'is-active':''"-->
-              <i :class="item.ICON"></i><span slot="title">{{item.TEXT}}</span>
-            </el-menu-item>
-          </template>
+                 active-text-color="#ffd04b">
+          <NavMenu :navMenus="navData"></NavMenu>
         </el-menu>
       </aside>
 
@@ -79,23 +69,33 @@
 </template>
 
 <script>
-import axios from 'axios';
+import menu from './menu';
 export default {
+  components: {
+    'NavMenu': menu
+  },
   data () {
     return {
-      defaultActiveIndex: '0',
+      defaultActiveIndex: '/dashboard',
       nickname: '',
       collapsed: false,
-      isCollapse: false,
       navData: []
     };
   },
   methods: {
     _getNavData () {
-      axios.get('./../../static/nav.json').then(res => {
-        this.navData = res.data;
-        console.log(res.data);
+      const that = this;
+      this.$http.openApiAxios({
+        method: 'GET',
+        url: './../../static/nav.json',
+        success: function (res) {
+          that.navData = res;
+        }
       });
+      // axios.get('./../../static/nav.json').then(res => {
+      //   this.navData = res.data;
+      //   console.log(res.data);
+      // });
     },
     handleSelect (index) {
       this.defaultActiveIndex = index;
@@ -194,8 +194,27 @@ export default {
         overflow-x: hidden;
         overflow-y: auto;
       }
+
+      .el-menu-vertical:not(.el-menu--collapse) {
+        width: 180px;
+        min-height: 400px
+      }
+      .el-menu-vertical {
+        display: inline-block;
+        text-align: left
+      }
+      .el-submenu .el-menu-item {
+        min-width: 60px;
+      }
       .el-menu {
-        height: 100%; /*写给不支持calc()的浏览器*/
+        width: 180px;
+        border-right: 0;
+      }
+      .el-menu--collapse {
+        width: 60px;
+      }
+      /*.el-menu {
+        height: 100%; !*写给不支持calc()的浏览器*!
         height: -moz-calc(100% - 80px);
         height: -webkit-calc(100% - 80px);
         height: calc(100% - 80px);
@@ -220,7 +239,7 @@ export default {
       }
       .el-menu-item:hover, .el-submenu .el-menu-item:hover, .el-submenu__title:hover {
         background-color: #4a5064 !important;
-      }
+      }*/
     }
     .menu-toggle {
       background: #4A5064;

@@ -13,6 +13,7 @@ import SendLog from '@/views/system/sendLog.vue'; // 系统发送日志
 import RecvLog from '@/views/system/recvLog.vue'; // 系统接收日志
 import MqLog from '@/views/system/mqLog.vue'; // 后端MQ日志
 import SocketLog from '@/views/system/socketLog.vue'; // 后端SOCKET日志
+import tempUse from '@/views/demo/tempUse.vue'; // 示例
 
 Vue.use(Router);
 
@@ -35,7 +36,8 @@ const router = new Router({
         {path: '/socketLog', name: 'socketLog', component: SocketLog}
       ]
     },
-    {path: '/login', name: 'login', component: Login}
+    {path: '/login', name: 'login', component: Login},
+    {path: '/tempUse', name: 'tempUse', component: tempUse}
   ]
 });
 
