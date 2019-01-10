@@ -86,7 +86,7 @@ export default {
       dialogVisible: false,
       tableHeight: document.body.clientHeight - 150,
       formInline: {
-        telId: '',
+        telId: null,
         date1: this.$util.formatDate(new Date()),
         date2: this.$util.formatDate(new Date())
       },
@@ -128,6 +128,7 @@ export default {
         success: function (res) {
           if (res.meta.code === 1) {
             that.$message.success('保存成功!');
+            that.query();
           } else {
             that.$message.error('保存数据失败!');
           }
