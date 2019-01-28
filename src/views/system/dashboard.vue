@@ -28,12 +28,12 @@
           </el-col>
           <el-col :span="8" class="status-dsp">
             <div class="sk-ip"><span>{{serverAddr}}</span></div>
-            <div class="sk-status"><span :class="serverStatus === 'DOWN' ? 'dataDanger': 'dataNormal'">{{serverStatus}}</span></div>
+            <div class="sk-status"><span :class="serverStatus === 'RUNNING' ? 'dataNormal' : 'dataDanger'">{{serverStatus}}</span></div>
             <div class="sk-title"><span>服务端</span></div>
           </el-col>
           <el-col :span="8" class="status-dsp">
             <div class="sk-ip"><span>{{clientAddr}}</span></div>
-            <div class="sk-status"><span :class="clientStatus === 'DOWN' ? 'dataDanger': 'dataNormal'">{{clientStatus}}</span></div>
+            <div class="sk-status"><span :class="clientStatus === 'RUNNING' ?  'dataNormal' : 'dataDanger'">{{clientStatus}}</span></div>
             <div class="sk-title"><span>客户端</span></div>
           </el-col>
         </el-row>

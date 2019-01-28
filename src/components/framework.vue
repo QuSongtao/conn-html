@@ -249,7 +249,7 @@ export default {
       line-height: 30px;
     }
     .content-container {
-      background: #959ea2;
+      /*background: #959ea2;*/
       flex: 1;
       overflow-y: auto;
       padding: 10px;

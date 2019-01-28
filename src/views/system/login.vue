@@ -1,21 +1,25 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form" auto-complete="on" label-position="left" :model="loginForm" ref="loginForm">
-      <h3 class="title">号角通信系统登录</h3>
-      <el-form-item prop="username" :rules="[{ required: true, message: '请输入账号!', trigger: 'blur' }]">
-        <el-input v-model="loginForm.username" type="text" auto-complete="on" placeholder="请输入登录用户名" clearable >
-          <template slot="prepend">账    号：</template>
-        </el-input>
-      </el-form-item>
-      <el-form-item prop="password" :rules="[{ required: true, message: '密码不能为空!', trigger: 'change' }]">
-        <el-input v-model="loginForm.password" type="password" auto-complete="on" placeholder="请输入登录密码" @keyup.enter.native="login" clearable>
-          <template slot="prepend">口    令：</template>
-        </el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" style="width:100%;" @click="login">登录</el-button>
-      </el-form-item>
-    </el-form>
+    <div class="ms-login">
+      <div class="ms-title">通信后台管理系统</div>
+      <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="0px" class="ms-content">
+        <el-form-item prop="username">
+          <el-input v-model="loginForm.username" placeholder="username">
+            <el-button slot="prepend" icon="el-icon-lx-people"></el-button>
+          </el-input>
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input type="password" placeholder="password" v-model="loginForm.password"
+                    @keyup.enter.native="login">
+            <el-button slot="prepend" icon="el-icon-lx-lock"></el-button>
+          </el-input>
+        </el-form-item>
+        <div class="login-btn">
+          <el-button type="primary" @click="login">登录</el-button>
+        </div>
+        <p class="login-tips">提示 : 请输入用户名和密码登录通信后台。</p>
+      </el-form>
+    </div>
   </div>
 </template>
 
@@ -26,6 +30,14 @@ export default {
       loginForm: {
         username: 'admin',
         password: ''
+      },
+      rules: {
+        username: [
+          {required: true, message: '请输入用户名！', trigger: 'blur'}
+        ],
+        password: [
+          {required: true, message: '请输入密码！', trigger: 'blur'}
+        ]
       }
     };
   },
@@ -66,45 +78,58 @@ export default {
   $bg: #2d3a4b;
   $dark_gray: #889aa4;
   $light_gray: #eee;
+  $width: 100%;
+  $height: 100%;
+  /*登录框背景色*/
+  $rgb: rgba(255, 255, 255, 0.3);
+  /*登录背景图*/
+  $login-bg: '../../assets/images/login-bg.jpg';
   .login-container {
-    position: fixed;
+    position: relative;
     height: 100%;
     width: 100%;
-    background-color: $bg;
-    .login-form {
-      position: absolute;
-      left: 0;
-      right: 0;
-      width: 400px;
-      padding: 35px 35px 15px 35px;
-      margin: 120px auto;
-    }
-    .tips {
-      font-size: 14px;
-      color: #fff;
-      margin-bottom: 10px;
-      span {
-        &:first-of-type {
-          margin-right: 16px;
-        }
-      }
-    }
-    .svg-container {
-      padding: 6px 5px 6px 15px;
-      color: $dark_gray;
-      vertical-align: middle;
-      width: 30px;
-      display: inline-block;
-      &_login {
-        font-size: 20px;
-      }
-    }
-    .title {
-      font-size: 26px;
-      color: $light_gray;
-      margin: 0px auto 40px auto;
+    background-image: url($login-bg);
+    background-size: 100%;
+
+    /*标题样式*/
+    .ms-title {
+      width: $width;
+      line-height: 50px;
       text-align: center;
-      font-weight: bold;
+      font-size: 20px;
+      color: #fff;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .ms-login {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 350px;
+      margin: -190px 0 0 -175px;
+      border-radius: 5px;
+      background: $rgb;
+      overflow: hidden;
+    }
+
+    .ms-content {
+      padding: 30px 30px;
+    }
+
+    .login-btn {
+      text-align: center;
+    }
+
+    .login-btn button {
+      width: $width;
+      height: 36px;
+      margin-bottom: 10px;
+    }
+
+    .login-tips {
+      font-size: 12px;
+      line-height: 30px;
+      color: #fff;
     }
   }
 </style>

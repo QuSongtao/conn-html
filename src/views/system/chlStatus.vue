@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-form :inline="true" :model="formInline">
-      <el-form-item label="通道类型" label-width="80px">
+    <el-form :inline="true" :model="formInline" size="small" style="background-color: #e4e7ed; padding-top: 3px; margin-bottom: 5px;">
+      <el-form-item label="通道类型:" label-width="90px">
         <el-select v-model="formInline.region" placeholder="请选择" style="width: 120px;" @change="refresh">
           <el-option label="全部通道" value="A"></el-option>
           <el-option label="发送通道" value="S"></el-option>
@@ -12,7 +12,7 @@
         <el-button type="primary" @click="refresh">刷新</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="gridData" :height="tableHeight" border :style="{'width': '100%','height': tableHeight}">
+    <el-table :data="gridData" :height="tableHeight"  :style="{'width': '100%','height': tableHeight}">
       <el-table-column type="index" label="序号" width="50"></el-table-column>
       <el-table-column type="id" label="主键" width="50" v-if="show"></el-table-column>
       <el-table-column prop="objName" label="通道名称" width="180"></el-table-column>
@@ -20,8 +20,8 @@
       <el-table-column prop="objType" label="对象类型" width="50" v-if="show"></el-table-column>
       <el-table-column prop="transferType" label="收发类型" width="180">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.transferType==='S'" type="success" size="medium" class="status-tag-radius">发送</el-tag>
-          <el-tag v-if="scope.row.transferType==='R'" type="danger" size="medium" class="status-tag-radius">接收</el-tag>
+          <span v-if="scope.row.transferType==='S'">发送通道</span>
+          <span v-if="scope.row.transferType==='R'">接收通道</span>
         </template>
       </el-table-column>
       <el-table-column prop="objStatus" label="通道状态" width="180">
@@ -97,5 +97,5 @@ export default {
 <style lang="scss" scoped>
   .status-tag-radius{border-radius: 14px !important;}
   .el-pagination{background-color: #ffffff;}
-  .el-form-item{margin-bottom: 10px !important;}
+  .el-form-item{margin-bottom: 3px !important;}
 </style>

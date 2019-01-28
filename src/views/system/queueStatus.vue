@@ -6,7 +6,7 @@
       </el-form-item>
     </el-form>
     <el-table :data="gridData" :height="tableHeight" border :style="{'width': '100%','height': tableHeight}">
-      <el-table-column type="index" label="序号" width="50"></el-table-column>
+      <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
       <el-table-column type="id" label="主键" width="50" v-if="show"></el-table-column>
       <el-table-column prop="objName" label="队列名称" width="180"></el-table-column>
       <el-table-column prop="objDes" label="队列描述" width="180"></el-table-column>
@@ -23,6 +23,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="remoteSystem" label="远程系统名称" width="180"></el-table-column>
+      <el-table-column label="" fixed="right"></el-table-column>
     </el-table>
     <el-pagination
       @size-change="handleSizeChange"

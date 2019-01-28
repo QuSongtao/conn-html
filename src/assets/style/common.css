@@ -47,7 +47,7 @@ a {
 
 .el-table{ font-size: 12px !important; border:1px solid #e5e5e5;}
 .el-table--fit {border-right: 1px solid #e5e5e5 !important;}
-.el-table td{padding: 4px 0 !important;}/*表格行间距*/
+.el-table td{padding: 2px 0 !important;}/*表格行间距*/
 .el-table th{padding: 7px 0 !important; background-color: #fafafa !important;}
 .el-table thead{color: #333333 !important;}
 
