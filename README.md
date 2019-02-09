@@ -47,7 +47,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 13.MQ在Linux下安全手册形成 2018-11-19
 14.通信技术方案文档 2019-01-15
 15.UI风格调整（表格、表单、布局）
-
+16.电文配置界面的id主键需要调整
 测试任务
 1.发送日志 
 2.接收日志

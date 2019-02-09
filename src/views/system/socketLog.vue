@@ -1,15 +1,12 @@
 <template>
   <div>
-    <!--<el-radio-group v-model="logRadio">-->
-    <!--<el-radio-button label="发送日志" @click="getSendLog"></el-radio-button>-->
-    <!--<el-radio-button label="接收日志" @click="getRecvLog"></el-radio-button>-->
-    <!--<el-radio-button label="系统日志" @click="getSysLog"></el-radio-button>-->
-    <!--</el-radio-group>-->
-    <el-button-group>
-      <el-button type="primary" @click="getSendLog">发送日志</el-button>
-      <el-button type="primary" @click="getRecvLog">接收日志</el-button>
-      <el-button type="primary" @click="getSysLog">系统日志</el-button>
-    </el-button-group>
+    <el-form :inline="true" :model="formInline" size="small" class="form-style">
+      <el-button-group>
+        <el-button type="primary" @click="getSendLog" size="small">发送日志</el-button>
+        <el-button type="primary" @click="getRecvLog" size="small">接收日志</el-button>
+        <el-button type="primary" @click="getSysLog" size="small">系统日志</el-button>
+      </el-button-group>
+    </el-form>
     <el-row>
       <el-col :span="6">
         <el-table :data="gridData"
@@ -25,8 +22,10 @@
           </el-table-column>
         </el-table>
       </el-col>
-      <el-col :span="18" :style="{'background-color': '#004444','height': tableHeight + 'px'}" class="logTextArea">
-        <textarea v-html="logText" class="logarea" :style="{'height': tableHeight + 'px'}"></textarea>
+      <el-col :span="18" :style="{'height': tableHeight + 'px'}" class="logTextArea">
+        <div style="border: 1px solid #e5e5e5;">
+          <textarea v-model="logText" class="logarea" :style="{'height': taH + 'px'}"></textarea>
+        </div>
       </el-col>
     </el-row>
   </div>
@@ -38,7 +37,8 @@ export default {
   data () {
     return {
       logText: '',
-      tableHeight: document.body.clientHeight - 120,
+      tableHeight: document.body.clientHeight - 110,
+      taH: document.body.clientHeight - 112,
       pathIndex: '',
       gridData: []
     };
@@ -108,7 +108,8 @@ export default {
     const that = this;
     // _.debounce 是一个通过 lodash 限制操作频率的函数。
     window.onresize = _.debounce(() => {
-      that.tableHeight = document.body.clientHeight - 120;
+      that.tableHeight = document.body.clientHeight - 110;
+      that.taH = document.body.clientHeight - 112;
     }, 400);
     this.getSendLog();
   }
@@ -116,8 +117,9 @@ export default {
 </script>
 <style lang="scss" scoped>
   .status-tag-radius{border-radius: 14px !important;}
-  .el-button-group{margin-bottom: 10px;}
-  .el-pagination{background-color: #ffffff;}
+  .el-button-group{margin-bottom: 3px; margin-left: 5px}
+  .el-form-item{margin-bottom: 3px !important;}
+  .form-style{background-color: #fafafa; padding-top: 3px; margin-bottom: 5px;border: 1px solid #e5e5e5}
   .logTextArea{
     font-family: 'Consolas';
     font-size: 12px;

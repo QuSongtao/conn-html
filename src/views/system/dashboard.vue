@@ -1,74 +1,59 @@
 <template>
   <div>
     <el-row :gutter="10">
-      <el-col :span="12" >
-          <el-row class="row-lt">
-            <el-col :span="4">
-              <i class="fa fa-database icon-size-lt" @click="getQmgrStatus"></i>
-            </el-col>
-            <el-col :span="4">
-              <div class="status-title">IBM MQ</div>
-            </el-col>
-            <el-col :span="8" class="status-dsp">
-              <div class="qmgr-name"><span>{{qmgrName}}</span></div>
-              <div class="qmgr-title"><span>队列管理器</span></div>
-
-            </el-col>
-            <el-col :span="8" class="status-dsp">
-              <div class="qmgr-name"><span :class="qmgrStatus === 'DOWN' ? 'dataDanger' : 'dataNormal'">{{qmgrStatus}}</span></div>
-              <div class="qmgr-title"><span>运行状态</span></div>
-            </el-col>
-          </el-row>
+      <el-col :span="6" >
         <el-row class="row-lt">
-          <el-col :span="4">
-              <i class="fa fa-sitemap icon-size-lt" @click="getNettyStatus"></i>
+          <el-col :span="8" class="data-icon">
+            <i class="fa fa-server icon-size-rt" @click="getQmgrStatus"></i>
+            <div class="icon-text">IBM MQ</div>
           </el-col>
-          <el-col :span="4">
-            <div class="status-title">SOCKET</div>
-          </el-col>
-          <el-col :span="8" class="status-dsp">
-            <div class="sk-ip"><span>{{serverAddr}}</span></div>
-            <div class="sk-status"><span :class="serverStatus === 'RUNNING' ? 'dataNormal' : 'dataDanger'">{{serverStatus}}</span></div>
-            <div class="sk-title"><span>服务端</span></div>
-          </el-col>
-          <el-col :span="8" class="status-dsp">
-            <div class="sk-ip"><span>{{clientAddr}}</span></div>
-            <div class="sk-status"><span :class="clientStatus === 'RUNNING' ?  'dataNormal' : 'dataDanger'">{{clientStatus}}</span></div>
-            <div class="sk-title"><span>客户端</span></div>
+          <el-col :span="16" class="data-dsp">
+            <div class="ctn-title"><span>队列管理器</span></div>
+            <div class="ctn-text"><span>{{qmgrName}}</span></div>
+            <div class="ctn-title"><span>运行状态</span></div>
+            <div class="ctn-text"><span :class="qmgrStatus === 'DOWN' ? 'dataDanger' : 'dataNormal'">{{qmgrStatus}}</span></div>
           </el-col>
         </el-row>
       </el-col>
-      <el-col :span="12">
-        <el-row class="row-rt">
-          <el-col :span="4" class="data-icon">
-              <i class="fa fa-skyatlas icon-size-rt" @click="getCountNum"></i>
+      <el-col :span="6" >
+        <el-row class="row-st">
+          <el-col :span="8" class="data-icon">
+            <i class="fa fa-sliders icon-size-rt" @click="getNettyStatus"></i>
+            <div>SOCKET</div>
           </el-col>
-          <el-col :span="8" class="data-dsp">
-            <div class="data-title"><span>待发送数据</span></div>
-            <div class="data-content"><span class="data-number">{{toSendNum}}</span><span>条</span></div>
-          </el-col>
-          <el-col :span="4" class="data-icon-r">
-            <i class="fa fa-line-chart icon-size-rt" @click="getCountNum"></i>
-          </el-col>
-          <el-col :span="8" class="data-dsp-r">
-            <div class="data-title"><span>累计发送数据</span></div>
-            <div class="data-content"><span class="data-number-old">{{sendTotalNum}}</span><span>条</span></div>
+          <el-col :span="16" class="data-dsp">
+            <div class="ctn-title"><span>服务端{{serverAddr}}</span></div>
+            <div class="ctn-text"><span :class="serverStatus === 'RUNNING' ? 'dataNormal' : 'dataDanger'">{{serverStatus}}</span></div>
+            <div class="ctn-title"><span>客户端{{clientAddr}}</span></div>
+            <div class="ctn-text"><span :class="clientStatus === 'RUNNING' ?  'dataNormal' : 'dataDanger'">{{clientStatus}}</span></div>
           </el-col>
         </el-row>
+      </el-col>
+      <el-col :span="6">
         <el-row class="row-rt">
-          <el-col :span="4" class="data-icon">
-            <i class="fa fa-mixcloud icon-size-rt" @click="getCountNum"></i>
+          <el-col :span="8" class="data-icon">
+            <i class="fa fa-skyatlas icon-size-rt" @click="getCountNum"></i>
+            <div>待处理</div>
           </el-col>
-          <el-col :span="8" class="data-dsp">
-            <div class="data-title"><span>待处理数据</span></div>
-            <div class="data-content"><span class="data-number">{{toRecvNum}}</span><span>条</span></div>
+          <el-col :span="16" class="data-dsp">
+            <div class="ctn-title"><span>待发送数据</span></div>
+            <div class="ctn-text"><span>{{toSendNum}}</span></div>
+            <div class="ctn-title"><span>待处理数据</span></div>
+            <div class="ctn-text"><span>{{toRecvNum}}</span></div>
           </el-col>
-          <el-col :span="4" class="data-icon-r">
-            <i class="fa fa-bar-chart-o icon-size-rt" @click="getCountNum"></i>
+        </el-row>
+      </el-col>
+      <el-col :span="6">
+        <el-row class="row-ft">
+          <el-col :span="8" class="data-icon">
+            <i class="fa fa-at icon-size-rt" @click="getCountNum"></i>
+            <div>累计结果</div>
           </el-col>
-          <el-col :span="8" class="data-dsp-r">
-            <div class="data-title"><span>累计接收数据</span></div>
-            <div class="data-content"><span class="data-number-old">{{recvTotalNum}}</span><span>条</span></div>
+          <el-col :span="16" class="data-dsp">
+            <div class="ctn-title"><span>累计发送数据</span></div>
+            <div class="ctn-text"><span>{{sendTotalNum}}</span></div>
+            <div class="ctn-title"><span>累计接收数据</span></div>
+            <div class="ctn-text"><span>{{recvTotalNum}}</span></div>
           </el-col>
         </el-row>
       </el-col>
@@ -76,7 +61,7 @@
     <el-row :gutter="10">
       <el-tabs type="border-card" class="el-table--border_card" :style="{'height': logHeight + 'px'}">
         <el-tab-pane :style="{'height': logHgt + 'px'}" ref="mqLogTextArea">
-          <span slot="label" @click="getMqLog"><i class="fa fa-database"></i> IBM MQ日志</span>
+          <span slot="label" @click="getMqLog"><i class="fa fa-server"></i> IBM MQ日志</span>
           <div v-html="mqLog"></div>
         </el-tab-pane>
         <el-tab-pane :style="{'height': logHgt + 'px'}">
@@ -94,8 +79,8 @@ export default {
     return {
       hti: window.innerHeught - 50 - 10,
       hasError: true,
-      logHeight: document.body.clientHeight - 282,
-      logHgt: document.body.clientHeight - 332,
+      logHeight: document.body.clientHeight - 175,
+      logHgt: document.body.clientHeight - 226,
       mqLog: '',
       skLog: '',
       qmgrName: '未知',
@@ -188,8 +173,8 @@ export default {
     const that = this;
     // _.debounce 是一个通过 lodash 限制操作频率的函数。
     window.onresize = _.debounce(() => {
-      that.logHeight = document.body.clientHeight - 285;
-      that.logHgt = document.body.clientHeight - 335;
+      that.logHeight = document.body.clientHeight - 175;
+      that.logHgt = document.body.clientHeight - 226;
     }, 400);
     this.getMqLog();
     this.getQmgrStatus();
@@ -199,54 +184,35 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-  $head-bg-color: #00c0ef;
   $ctn-bg-color: #ffffff;
-  $ctn-tx-color: #333333;
-  $ft-size: 26px;
+  $ctn-tx-color: #6b6969;
+  $ft-size: 18px;
+  $icon-text-size: 14px;
   .el-row {
     margin-bottom: 8px;
-    /*box-shadow: 1px 0 5px #000 ;*/
     &:last-child {
       margin-bottom: 0;
     }
   }
-  .row-lt{background-color: $head-bg-color;}
-  .row-lt .el-col{height: 100px;color: #ffffff;text-align: center}
-  .row-lt .status-dsp{background-color: $ctn-bg-color;}
-  .row-lt .status-dsp .qmgr-title{text-align: center;margin-top: 5px;}
-  .row-lt .status-dsp .qmgr-title span{font-size: 14px; color: $ctn-tx-color}
-  .row-lt .status-dsp .qmgr-name{margin-top: 18px;}
-  .row-lt .status-dsp .qmgr-name span{font-size: $ft-size;font-weight:bold; color: #333744}
-  .row-lt .status-dsp .sk-ip{text-align: center;color: #333744;margin-top: 10px;}
-  .row-lt .status-dsp .sk-ip span{font-size: 12px;}
-  .row-lt .status-dsp .sk-status{margin-top: 1px;text-align: center;color: #333744;}
-  .row-lt .status-dsp .sk-status span{font-size: $ft-size;font-weight: bold;}
-  .row-lt .status-dsp .sk-title{text-align: center;margin-top: 1px;}
-  .row-lt .status-dsp .sk-title span{font-size: 14px; color: #333744}
-  .row-lt .status-title{margin-top: 40px; font-size: 16px;}
+  .el-col{height: 100px;}
+  .row-lt{background-color: #00c0ef;}
+  .row-rt{background-color: #00a65a;}
+  .row-st{background-color: #dd4b39;}
+  .row-ft{background-color: #f39c12;}
+  .ctn-title{margin: 5px 0 0 5px; font-size: 14px;}
+  .ctn-title span{color:$ctn-tx-color}
+  .ctn-text{margin: 2px 0 0 5px;}
+  .ctn-text span{font-size: $ft-size;font-weight:bold; color: #626366}
 
-  .row-rt{background-color: #00a65a; height: 100px;}
-  .row-rt .data-icon{text-align: center}
-  .row-rt .data-dsp{background-color: #ffffff; height: 100px; color: #333744}
-  .row-rt .data-dsp .data-title{margin-top: 10px; margin-left: 10px;}
-  .row-rt .data-dsp .data-title span{font-size: 14px; margin-left: 5px;}
-  .row-rt .data-dsp .data-content{margin-top: 10px;margin-left:10px;font-size: 14px;}
-  .row-rt .data-dsp .data-content .data-number{font-size: $ft-size;font-weight: bold;margin-left: 5px; color: green}
-  .row-rt .data-dsp .data-content .data-number-old{font-size: $ft-size;font-weight: bold;margin-left: 5px; color: gainsboro;}
+  .data-dsp{background-color: #ffffff; height: 100px;}
+  .data-icon{text-align: center; color: #ffffff; font-size: 14px;}
 
-  .row-rt .data-icon-r{text-align: center; background-color: #f39c12; height: 100%}
-  .row-rt .data-dsp-r{background-color: #ffffff; height: 100px; color: #333744}
-  .row-rt .data-dsp-r .data-title{margin-top: 10px; margin-left: 10px;}
-  .row-rt .data-dsp-r .data-title span{font-size: 14px; margin-left: 5px;}
-  .row-rt .data-dsp-r .data-content{margin-top: 10px;margin-left:10px;font-size: 14px;}
-  .row-rt .data-dsp-r .data-content .data-number{font-size: $ft-size;font-weight: bold;margin-left: 5px; color: green}
-  .row-rt .data-dsp-r .data-content .data-number-old{font-size: $ft-size;font-weight: bold;margin-left: 5px; color: gainsboro;}
   /*根据变量改变状态字体颜色*/
   .dataDanger{ color: orangered !important;}
   .dataNormal{ color: green !important;}
-  .icon-size-rt{color: #FFFFFF;font-size: 45px;font-weight: bold;margin-top: 26px;text-align: center;cursor: pointer;}
-  .icon-size-lt{font-size: 50px;font-weight: bold;margin-top: 26px;cursor: pointer;}
+  .icon-size-rt{color: #FFFFFF;font-size: 40px;margin-top: 20px;text-align: center;cursor: pointer;}
   .el-table--border_card{/*background-color: #004444*/;margin-left: 5px;margin-right: 5px;}
+
   /*日志样式*/
   .el-tab-pane{overflow: auto;white-space: nowrap;color: #fabe5f;background-color: #004444;font-family: 'Consolas';font-size: 12px;padding: 5px 0 5px 5px;}
 </style>

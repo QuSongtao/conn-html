@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-form :inline="true" :model="formInline" style="height: 50px;">
-      <el-form-item label="接收时间：" required>
+    <el-form :inline="true" :model="formInline" size="small" class="form-style">
+      <el-form-item label="接收时间：" required label-width="110px">
         <el-col :span="11">
           <el-form-item prop="date1">
             <el-date-picker type="date" placeholder="选择起始日期" value-format="yyyy-MM-dd" v-model="formInline.date1" style="width: 150px;"></el-date-picker>
@@ -23,11 +23,11 @@
       </el-form-item>
     </el-form>
     <el-table :data="gridData"
-              :height="tableHeight" border
+              :height="tableHeight"
               :style="{'width': '100%','height': tableHeight}"
               ref="tableRecvLog"
               @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="40"></el-table-column>
+      <el-table-column type="selection" width="50"></el-table-column>
       <el-table-column type="index" label="序号" width="60"></el-table-column>
       <el-table-column type="id" label="主键" width="60" v-if="show"></el-table-column>
       <el-table-column prop="telId" label="电文ID" width="120"></el-table-column>
@@ -186,6 +186,6 @@ export default {
 </script>
 <style lang="scss" scoped>
   .status-tag-radius{border-radius: 14px !important;}
-  .el-pagination{background-color: #ffffff;}
-  .el-form-item{margin-bottom: 10px !important;}
+  .el-form-item{margin-bottom: 3px !important;}
+  .form-style{background-color: #fafafa; padding-top: 3px; margin-bottom: 5px;border: 1px solid #e5e5e5}
 </style>

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <el-form :inline="true">
+    <el-form :inline="true" size="small" class="form-style">
       <el-form-item>
-        <el-button type="primary" @click="refresh">刷新</el-button>
+        <el-button type="primary" @click="refresh" style="margin-left: 5px;">刷新</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="gridData" :height="tableHeight" border :style="{'width': '100%','height': tableHeight}">
+    <el-table :data="gridData" :height="tableHeight" :style="{'width': '100%','height': tableHeight}">
       <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
       <el-table-column type="id" label="主键" width="50" v-if="show"></el-table-column>
       <el-table-column prop="objName" label="队列名称" width="180"></el-table-column>
@@ -23,7 +23,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="remoteSystem" label="远程系统名称" width="180"></el-table-column>
-      <el-table-column label="" fixed="right"></el-table-column>
+      <el-table-column label=""></el-table-column>
     </el-table>
     <el-pagination
       @size-change="handleSizeChange"
@@ -86,6 +86,6 @@ export default {
 </script>
 <style lang="scss" scoped>
   .status-tag-radius{border-radius: 14px !important;}
-  .el-pagination{background-color: #ffffff;}
-  .el-form-item{margin-bottom: 10px !important;}
+  .el-form-item{margin-bottom: 3px !important;}
+  .form-style{background-color: #fafafa; padding-top: 3px; margin-bottom: 5px;border: 1px solid #e5e5e5}
 </style>

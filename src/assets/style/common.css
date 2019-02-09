@@ -50,6 +50,7 @@ a {
 .el-table td{padding: 2px 0 !important;}/*表格行间距*/
 .el-table th{padding: 7px 0 !important; background-color: #fafafa !important;}
 .el-table thead{color: #2e2e2e !important; font-size: 12px}
+.el-pagination{background-color: #ffffff;border: 1px solid #e5e5e5;border-top: 0}
 
 .log-lv-title{color: #e7e7ea;}
 .log-lv-info{color: #3dd83d;}

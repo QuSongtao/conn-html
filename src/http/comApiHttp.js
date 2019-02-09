@@ -106,9 +106,14 @@ export default class Http {
       }
       if (err) {
         let message = err.message;
-        if (message.indexOf('Network') > -1) {
+        if (message.indexOf('504') > -1) {
           Message.error({
-            message: '网络错误'
+            message: '网关错误,检查服务是否启动!'
+          });
+        }
+        if (message.indexOf('500') > -1) {
+          Message.error({
+            message: '服务内部错误!'
           });
         }
         if (message.indexOf('timeout') > -1) {

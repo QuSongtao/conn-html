@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :inline="true" :model="formInline" size="small" style="background-color: #fafafa; padding-top: 3px; margin-bottom: 5px;border: 1px solid #e5e5e5">
+    <el-form :inline="true" :model="formInline" size="small" class="form-style">
       <el-form-item label="通道类型:" label-width="90px">
         <el-select v-model="formInline.region" placeholder="请选择" style="width: 120px;" @change="refresh">
           <el-option label="全部通道" value="A"></el-option>
@@ -12,7 +12,7 @@
         <el-button type="primary" @click="refresh">刷新</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="gridData" :height="tableHeight"  :style="{'width': '100%','height': tableHeight}">
+    <el-table :data="gridData" :height="tableHeight" :style="{'width': '100%','height': tableHeight}">
       <el-table-column type="index" label="序号" width="50"></el-table-column>
       <el-table-column type="id" label="主键" width="50" v-if="show"></el-table-column>
       <el-table-column prop="objName" label="通道名称" width="180"></el-table-column>
@@ -30,6 +30,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="remoteSystem" label="远程系统名称" width="180"></el-table-column>
+      <el-table-column label="" ></el-table-column>
     </el-table>
     <el-pagination
       @size-change="handleSizeChange"
@@ -96,6 +97,6 @@ export default {
 </script>
 <style lang="scss" scoped>
   .status-tag-radius{border-radius: 14px !important;}
-  .el-pagination{background-color: #ffffff;border: 1px solid #e5e5e5}
   .el-form-item{margin-bottom: 3px !important;}
+  .form-style{background-color: #fafafa; padding-top: 3px; margin-bottom: 5px;border: 1px solid #e5e5e5}
 </style>
