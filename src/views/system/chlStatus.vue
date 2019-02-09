@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :inline="true" :model="formInline" size="small" style="background-color: #e4e7ed; padding-top: 3px; margin-bottom: 5px;">
+    <el-form :inline="true" :model="formInline" size="small" style="background-color: #fafafa; padding-top: 3px; margin-bottom: 5px;border: 1px solid #e5e5e5">
       <el-form-item label="通道类型:" label-width="90px">
         <el-select v-model="formInline.region" placeholder="请选择" style="width: 120px;" @change="refresh">
           <el-option label="全部通道" value="A"></el-option>
@@ -96,6 +96,6 @@ export default {
 </script>
 <style lang="scss" scoped>
   .status-tag-radius{border-radius: 14px !important;}
-  .el-pagination{background-color: #ffffff;}
+  .el-pagination{background-color: #ffffff;border: 1px solid #e5e5e5}
   .el-form-item{margin-bottom: 3px !important;}
 </style>

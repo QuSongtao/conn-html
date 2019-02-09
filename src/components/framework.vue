@@ -249,11 +249,11 @@ export default {
       line-height: 30px;
     }
     .content-container {
-      /*background: #959ea2;*/
+      background: #ecf0f5;
       flex: 1;
       overflow-y: auto;
-      padding: 10px;
-      padding-bottom: 1px;
+      padding: 7px;
+      /*padding-bottom: 1px;*/
       .content-wrapper {
         /*background-color: #fff;*/
         box-sizing: border-box;
