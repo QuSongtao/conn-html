@@ -31,7 +31,7 @@
       <el-table-column type="index" label="序号" width="60"></el-table-column>
       <el-table-column prop="id" label="主键ID" width="10" v-if="show"></el-table-column>
       <el-table-column prop="telId" label="电文ID" width="120"></el-table-column>
-      <el-table-column prop="telType" label="电文类型" width="80"></el-table-column>
+      <!--<el-table-column prop="telType" label="电文类型" width="80"></el-table-column>-->
       <el-table-column prop="sendFlag" label="发送状态" width="80" :formatter="statusFormat"></el-table-column>
       <el-table-column prop="createTime" label="插入时间" width="180"></el-table-column>
       <el-table-column prop="sendTime" label="发送时间" width="180"></el-table-column>
