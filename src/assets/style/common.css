@@ -69,5 +69,9 @@ a {
   top: 10px !important;
   right: 10px !important;
 }
+.el-dialog__footer {
+  padding: 10px 15px 10px !important;
+}
+
 
 

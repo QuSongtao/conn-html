@@ -28,14 +28,16 @@
               ref="tableSendLog"
               @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="50"></el-table-column>
-      <el-table-column type="index" label="序号" width="60"></el-table-column>
+      <el-table-column type="index" label="序号" width="50"></el-table-column>
       <el-table-column prop="id" label="主键ID" width="10" v-if="show"></el-table-column>
-      <el-table-column prop="telId" label="电文ID" width="120"></el-table-column>
+      <el-table-column prop="telId" label="电文ID" width="100"></el-table-column>
       <!--<el-table-column prop="telType" label="电文类型" width="80"></el-table-column>-->
       <el-table-column prop="sendFlag" label="发送状态" width="80" :formatter="statusFormat"></el-table-column>
-      <el-table-column prop="createTime" label="插入时间" width="180"></el-table-column>
-      <el-table-column prop="sendTime" label="发送时间" width="180"></el-table-column>
-      <el-table-column prop="msgId" label="消息ID" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="receiverName" label="接收者" width="120" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="createTime" label="插入时间" width="150"></el-table-column>
+      <el-table-column prop="sendTime" label="发送时间" width="150"></el-table-column>
+      <el-table-column prop="sendResult" label="结果描述" width="200" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="msgId" label="消息ID" v-if="show"></el-table-column>
       <el-table-column label="操作" fixed="right">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleInfo(scope.$index, scope.row)">消息详情</el-button>
@@ -54,17 +56,24 @@
     </el-pagination>
     <el-dialog
       title="消息内容"
+      v-dialogDrag
       :visible.sync="dialogVisible"
-      width="30%">
-      <textarea style="width: 99%; border: 1px solid #cccccc" v-model="msgText"></textarea>
+      width="450px">
+      <div style="border: 1px solid #cccccc;height: 200px;width: 100%;word-wrap:break-word;overflow-y: auto">{{msgText}}</div>
+      <!--<textarea style="width: 99%; border: 1px solid #cccccc" v-model="msgText"></textarea>-->
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <!--<el-button @click="dialogVisible = false" size="mini">取 消</el-button>-->
+        <el-button type="primary" @click="dialogVisible = false" size="mini">确 定</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
-
+<style>
+  .el-dialog__body {
+    padding: 5px 5px 0 5px !important;
+    font-size: 12px !important;
+  }
+</style>
 <script>
 import _ from 'lodash';
 export default {

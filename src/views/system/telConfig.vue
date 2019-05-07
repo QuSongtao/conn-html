@@ -43,7 +43,7 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="totalRow">
     </el-pagination>
-    <el-dialog title="表单" :visible.sync="dialogVisible" width="30%">
+    <el-dialog title="表单" :visible.sync="dialogVisible" width="350px" v-dialogDrag>
       <el-form :model="form">
         <el-form-item label="主键" :label-width="formLabelWidth" v-if="false">
           <el-input v-model="form.id" autocomplete="off"></el-input>
@@ -77,8 +77,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="saveTelConfig">保 存</el-button>
+        <el-button @click="dialogVisible = false" size="mini">取 消</el-button>
+        <el-button type="primary" @click="saveTelConfig" size="mini">保 存</el-button>
       </div>
     </el-dialog>
   </div>
