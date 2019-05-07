@@ -8,7 +8,7 @@
         <el-button type="primary" @click="query">查询</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button @click="addNewRecord">新增</el-button>
+        <el-button @click="addNewRecord" v-if="isShow">新增</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="telConfigData"
@@ -21,10 +21,13 @@
       <el-table-column prop="id" label="主键ID" width="10" v-if="show"></el-table-column>
       <el-table-column prop="telId" label="电文ID" width="120"></el-table-column>
       <el-table-column prop="telName" label="电文名称" width="120"></el-table-column>
-      <el-table-column prop="transferType" label="类型" width="80" :formatter="statusFormat"></el-table-column>
-      <el-table-column prop="queueName" label="队列名称" width="180"></el-table-column>
-      <el-table-column prop="remoteSystem" label="对接系统名称" width="180"></el-table-column>
-      <el-table-column label="操作" fixed="right">
+      <!--<el-table-column prop="transferType" label="类型" width="80" :formatter="statusFormat"></el-table-column>-->
+      <el-table-column prop="queueName" label="队列名称" width="80"></el-table-column>
+      <el-table-column prop="sender" label="发送者编码" width="80"></el-table-column>
+      <el-table-column prop="senderName" label="发送者名称" width="130"></el-table-column>
+      <el-table-column prop="receiver" label="接收者编码" width="80"></el-table-column>
+      <el-table-column prop="receiverName" label="接收者名称" width="130"></el-table-column>
+      <el-table-column label="操作" fixed="right" v-if="isShow">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleInfo(scope.$index, scope.row)">修改</el-button>
           <el-button size="mini" @click="deleteTelId(scope.$index, scope.row)">删除</el-button>
@@ -42,7 +45,7 @@
     </el-pagination>
     <el-dialog title="表单" :visible.sync="dialogVisible" width="30%">
       <el-form :model="form">
-        <el-form-item label="主键" :label-width="formLabelWidth">
+        <el-form-item label="主键" :label-width="formLabelWidth" v-if="false">
           <el-input v-model="form.id" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="电文id" :label-width="formLabelWidth">
@@ -51,17 +54,26 @@
         <el-form-item label="电文名称" :label-width="formLabelWidth">
           <el-input v-model="form.telName" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="类型" :label-width="formLabelWidth">
-          <el-select v-model="form.transferType" placeholder="选择类型">
-            <el-option label="发送" value="S"></el-option>
-            <el-option label="接收" value="R"></el-option>
-          </el-select>
-        </el-form-item>
+        <!--<el-form-item label="类型" :label-width="formLabelWidth">-->
+        <!--<el-select v-model="form.transferType" placeholder="选择类型">-->
+        <!--<el-option label="发送" value="S"></el-option>-->
+        <!--<el-option label="接收" value="R"></el-option>-->
+        <!--</el-select>-->
+        <!--</el-form-item>-->
         <el-form-item label="队列名称" :label-width="formLabelWidth">
           <el-input v-model="form.queueName" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="对接系统名称" :label-width="formLabelWidth">
-          <el-input v-model="form.remoteSystem" autocomplete="off"></el-input>
+        <el-form-item label="发送者编码" :label-width="formLabelWidth">
+          <el-input v-model="form.sender" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="发送者名称" :label-width="formLabelWidth">
+          <el-input v-model="form.senderName" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="接收者编码" :label-width="formLabelWidth">
+          <el-input v-model="form.receiver" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="接收者名称" :label-width="formLabelWidth">
+          <el-input v-model="form.receiverName" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -74,6 +86,7 @@
 
 <script>
 import _ from 'lodash';
+
 export default {
   data () {
     return {
@@ -93,7 +106,8 @@ export default {
       telConfigData: [],
       form: {},
       formLabelWidth: '120px',
-      saveMethod: 'PATCH'
+      saveMethod: 'PATCH',
+      isShow: this.$store.state.isAdmin === '1'
     };
   },
   methods: {
@@ -154,7 +168,8 @@ export default {
             }
           }
         });
-      }).catch(_ => {});
+      }).catch(_ => {
+      });
     },
     // 发送状态格式化
     statusFormat: function (row, column, cellValue, index) {
@@ -194,7 +209,18 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .status-tag-radius{border-radius: 14px !important;}
-  .el-form-item{margin-bottom: 3px !important;}
-  .form-style{background-color: #fafafa; padding-top: 3px; margin-bottom: 5px;border: 1px solid #e5e5e5}
+  .status-tag-radius {
+    border-radius: 14px !important;
+  }
+
+  .el-form-item {
+    margin-bottom: 3px !important;
+  }
+
+  .form-style {
+    background-color: #fafafa;
+    padding-top: 3px;
+    margin-bottom: 5px;
+    border: 1px solid #e5e5e5
+  }
 </style>

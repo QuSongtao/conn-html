@@ -57,4 +57,17 @@ a {
 .log-lv-warn{color: #ffff00;}
 .log-lv-error{color: #ff4949;}
 
+/* dialog弹窗样式 */
+.el-dialog__header{
+  border-bottom: 1px solid #c2c2c2;
+  padding: 5px 20px 5px !important;
+}
+.el-dialog__title {
+  font-size: 14px !important;
+}
+.el-dialog__headerbtn {
+  top: 10px !important;
+  right: 10px !important;
+}
+
 

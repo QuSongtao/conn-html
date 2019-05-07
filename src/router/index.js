@@ -13,6 +13,9 @@ import SendLog from '@/views/system/sendLog.vue'; // 系统发送日志
 import RecvLog from '@/views/system/recvLog.vue'; // 系统接收日志
 import MqLog from '@/views/system/mqLog.vue'; // 后端MQ日志
 import SocketLog from '@/views/system/socketLog.vue'; // 后端SOCKET日志
+import User from '@/views/system/user.vue'; // 用户管理(授权,增加,修改密码等)
+import Dict from '@/views/system/dict.vue'; // 字典管理
+import Syscode from '@/views/system/syscode.vue'; // 系统编码管理
 import tempUse from '@/views/demo/tempUse.vue'; // 示例
 
 Vue.use(Router);
@@ -22,8 +25,8 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'common',
-      redirect: '/login',
+      name: 'framework',
+      // redirect: '/dashboard',
       component: Framework,
       children: [
         {path: '/dashboard', name: 'dashboard', component: Dashboard},
@@ -33,7 +36,10 @@ const router = new Router({
         {path: '/sendLog', name: 'sendLog', component: SendLog},
         {path: '/recvLog', name: 'recvLog', component: RecvLog},
         {path: '/mqLog', name: 'mqLog', component: MqLog},
-        {path: '/socketLog', name: 'socketLog', component: SocketLog}
+        {path: '/socketLog', name: 'socketLog', component: SocketLog},
+        {path: '/user', name: 'user', component: User},
+        {path: '/dict', name: 'dict', component: Dict},
+        {path: '/syscode', name: 'syscode', component: Syscode}
       ]
     },
     {path: '/login', name: 'login', component: Login},

@@ -2,6 +2,7 @@ import axios from 'axios';
 import router from '../router';
 // import Utils from "../utils/util.class";
 import {Loading, Message} from 'element-ui';
+import store from '../store';
 
 // let baseURL = process.env.BASE_API;
 console.log(process.env.BASE_API);
@@ -27,10 +28,12 @@ export default class Http {
     return o;
   }
   static openApiAxios (request) {
-    if (!window.sessionStorage.getItem('token') && request.url !== '/mgr/login') {
+    if (!store.state.accessToken && request.url !== '/mgr/login') {
+    // if (!window.localStorage.getItem('accessToken') && request.url !== '/mgr/login') {
       router.push('/login');
       return;
     }
+    axios.defaults.headers['accessToken'] = store.state.accessToken;
     request.data = this.filterNull(request.data);
     let _this = this;
     let _finally = '';

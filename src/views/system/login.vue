@@ -29,7 +29,7 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: ''
+        password: 'connadmin'
       },
       rules: {
         username: [
@@ -55,9 +55,15 @@ export default {
             },
             success: function (res) {
               if (res.meta.code === 1) {
-                window.sessionStorage.setItem('token', res.data.token);
-                that.$message.success(res.data.message);
+                that.$message.success('登录成功! ' + res.data.username);
+                that.$store.commit('setToken', res.data.accessToken);
+                that.$store.commit('setUsername', res.data.username);
+                that.$store.commit('setAdmin', res.data.isAdmin);
                 that.$router.push('/dashboard');
+                window.localStorage.setItem('accessToken', res.data.accessToken);
+                window.localStorage.setItem('username', res.data.username);
+                window.localStorage.setItem('isAdmin', res.data.isAdmin);
+                // that.$router.push({name: 'dashboard', params: {username: res.data.username}});
               } else {
                 that.$message.error(res.meta.message);
               }

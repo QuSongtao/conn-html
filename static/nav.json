@@ -61,8 +61,8 @@
   {
     "FM": "FM0007",
     "CODE": "07",
-    "TEXT": "后台日志",
-    "URL": "app.goods.gdsCls3",
+    "TEXT": "系统管理",
+    "URL": "app",
     "ICON": "el-icon-time",
     "POWER": true,
     "VALUE": [
@@ -77,13 +77,43 @@
         "VALUE": null
       },
       {
-        "FP": "md0003",
+        "FP": "md0002",
         "CODE": "0702",
         "TEXT": "SOCKET日志",
         "URL": "/socketLog",
         "SHOW": true,
         "LEAF": true,
         "INDEX": "2",
+        "VALUE": null
+      },
+      {
+        "FP": "md0003",
+        "CODE": "0703",
+        "TEXT": "用户信息管理",
+        "URL": "/user",
+        "SHOW": true,
+        "LEAF": true,
+        "INDEX": "3",
+        "VALUE": null
+      },
+      {
+        "FP": "md0004",
+        "CODE": "0704",
+        "TEXT": "通信系统编码",
+        "URL": "/syscode",
+        "SHOW": true,
+        "LEAF": true,
+        "INDEX": "4",
+        "VALUE": null
+      },
+      {
+        "FP": "md0005",
+        "CODE": "0705",
+        "TEXT": "编码字典管理",
+        "URL": "/dict",
+        "SHOW": true,
+        "LEAF": true,
+        "INDEX": "5",
         "VALUE": null
       }
     ]

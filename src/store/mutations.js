@@ -5,5 +5,19 @@ export default {
   [types.CONTENT_TITLTE] (state, id) {
     console.log(id);
     state.conntent_titlte = id;
+  },
+  setToken: (state, token) => {
+    state.accessToken = token;
+  },
+  setAdmin: (state, isAdmin) => {
+    state.isAdmin = isAdmin;
+  },
+  setUsername: (state, username) => {
+    state.username = username;
+  },
+  flushData: (state) => {
+    state.accessToken = window.localStorage.getItem('accessToken');
+    state.username = window.localStorage.getItem('username');
+    state.isAdmin = window.localStorage.getItem('isAdmin');
   }
 };

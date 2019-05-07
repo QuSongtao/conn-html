@@ -12,7 +12,10 @@
         <el-table :data="gridData"
                   :height="tableHeight"
                   :style="{'width': '100%','height': tableHeight}"
-                  @row-dblclick="rowDbClick">
+                  highlight-current-row
+                  @row-dblclick="rowDbClick"
+                  ref="dataTable"
+        >
           <el-table-column prop="fileName" label="文件名称" width="180" show-overflow-tooltip></el-table-column>
           <el-table-column prop="fileSize" label="大小" width="70"></el-table-column>
           <el-table-column label="操作">
@@ -77,6 +80,7 @@ export default {
       });
     },
     rowDbClick: function (row, event, column) {
+      this.$refs.dataTable.setCurrentRow(row);
       let that = this;
       this.$http.openApiAxios({
         url: '/mgr/log/content',

@@ -5,5 +5,9 @@ export default {
   changeCurrentTitle: ({commit}, title) => {
     console.log(title);
     commit(types.CONTENT_TITLTE, title);
+  },
+  // 登录设置token
+  setToken: ({commit}, token) => {
+    commit('setToken', token);
   }
 };
