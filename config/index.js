@@ -12,15 +12,15 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/mq/*': {
-        target: 'http://localhost:8081',
+        target: 'http://localhost:18082',
         secure: false
       },
       '/sk/*': {
-        target: 'http://localhost:8082',
+        target: 'http://localhost:18083',
         secure: false
       },
       '/mgr/*': {
-        target: 'http://localhost:8083',
+        target: 'http://localhost:18081',
         secure: false
       }
     },
