@@ -20,8 +20,8 @@
       </el-table-column>
       <el-table-column label="操作" fixed="right">
         <template slot-scope="scope">
-          <el-button size="mini" @click="changeStatus(scope.row.id, 0)" :disabled="scope.row.connFlag==='0'">禁用</el-button>
-          <el-button size="mini" @click="changeStatus(scope.row.id, 1)" :disabled="scope.row.connFlag==='1'">启用</el-button>
+          <el-button size="mini" @click="changeStatus(scope.row.id, 0)" :disabled="scope.row.connFlag==='0'" v-if="this.$store.state.isAdmin === '1'">禁用</el-button>
+          <el-button size="mini" @click="changeStatus(scope.row.id, 1)" :disabled="scope.row.connFlag==='1'" v-if="this.$store.state.isAdmin === '1'">启用</el-button>
         </template>
       </el-table-column>
     </el-table>

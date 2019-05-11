@@ -2,8 +2,8 @@
   <div>
     <el-form :inline="true" size="small" class="form-style">
       <el-form-item>
-        <el-button @click="add" style="margin-left: 5px;">增加</el-button>
-        <el-button @click="del" style="margin-left: 5px;">删除</el-button>
+        <el-button @click="add" style="margin-left: 5px;" v-if="this.$store.state.isAdmin === '1'">增加</el-button>
+        <el-button @click="del" style="margin-left: 5px;" v-if="this.$store.state.isAdmin === '1'">删除</el-button>
         <el-button type="primary" @click="refresh" style="margin-left: 5px;">刷新</el-button>
       </el-form-item>
     </el-form>
@@ -21,7 +21,7 @@
       <el-table-column prop="des" label="备注说明" width="180"></el-table-column>
       <el-table-column label="操作" fixed="right">
         <template slot-scope="scope">
-          <el-button size="mini" @click="edit(scope.$index, scope.row)">修改</el-button>
+          <el-button size="mini" @click="edit(scope.$index, scope.row)" >修改</el-button>
         </template>
       </el-table-column>
     </el-table>

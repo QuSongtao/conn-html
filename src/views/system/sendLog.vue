@@ -19,7 +19,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="query">查询</el-button>
-        <el-button type="primary" plain @click="reSend">重发</el-button>
+        <el-button type="primary" plain @click="reSend" v-if="this.$store.state.isAdmin === '1'">重发</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="sendLogData"
