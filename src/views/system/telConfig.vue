@@ -8,7 +8,7 @@
         <el-button type="primary" @click="query">查询</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button @click="addNewRecord" v-if="isShow" >新增</el-button>
+        <el-button @click="addNewRecord" v-if="isAdmin" >新增</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="telConfigData"
@@ -27,10 +27,10 @@
       <el-table-column prop="senderName" label="发送者名称" width="130"></el-table-column>
       <el-table-column prop="receiver" label="接收者编码" width="80"></el-table-column>
       <el-table-column prop="receiverName" label="接收者名称" width="130"></el-table-column>
-      <el-table-column label="操作" fixed="right" v-if="isShow">
+      <el-table-column label="操作" fixed="right" v-if="isAdmin">
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleInfo(scope.$index, scope.row)" v-if="this.$store.state.isAdmin === '1'">修改</el-button>
-          <el-button size="mini" @click="deleteTelId(scope.$index, scope.row)" v-if="this.$store.state.isAdmin === '1'">删除</el-button>
+          <el-button size="mini" @click="handleInfo(scope.$index, scope.row)" v-if="isAdmin">修改</el-button>
+          <el-button size="mini" @click="deleteTelId(scope.$index, scope.row)" v-if="isAdmin">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -107,7 +107,7 @@ export default {
       form: {},
       formLabelWidth: '120px',
       saveMethod: 'PATCH',
-      isShow: this.$store.state.isAdmin === '1'
+      isAdmin: this.$store.state.isAdmin === '1'
     };
   },
   methods: {
