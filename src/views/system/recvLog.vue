@@ -26,12 +26,14 @@
               :height="tableHeight"
               :style="{'width': '100%','height': tableHeight}"
               ref="tableRecvLog"
+              border
               @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="40"></el-table-column>
       <el-table-column type="index" label="序号" width="50"></el-table-column>
       <el-table-column type="id" label="主键" width="60" v-if="show"></el-table-column>
-      <el-table-column prop="telId" label="电文ID" width="100"></el-table-column>
+      <el-table-column prop="telId" label="电文ID" width="100" show-overflow-tooltip></el-table-column>
       <el-table-column prop="senderName" label="发送者" width="100" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="receiverName" label="接收者" width="100" show-overflow-tooltip></el-table-column>
       <el-table-column prop="recvTime" label="接收时间" width="150"></el-table-column>
       <el-table-column prop="dealTime" label="处理时间" width="150"></el-table-column>
       <el-table-column prop="dealFlag" label="处理状态" width="80" :formatter="statusFormat"></el-table-column>
