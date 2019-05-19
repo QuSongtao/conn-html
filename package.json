@@ -1,8 +1,8 @@
 {
   "name": "agent",
   "version": "1.0.0",
-  "description": "代理商系统",
-  "author": "王国顺 <wangguoshun@haomai-mrm.com>",
+  "description": "通信后台管理系统",
+  "author": "ansteel <ansteel@ansteel.com.cn>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -79,7 +79,7 @@
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
-    "webpack-dev-server": "^2.9.1",
+    "webpack-dev-server": ">=3.1.11",
     "webpack-merge": "^4.1.0"
   },
   "engines": {
