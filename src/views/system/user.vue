@@ -10,8 +10,10 @@
     <el-table :data="gridData"
               :height="tableHeight"
               :style="{'width': '100%','height': tableHeight}"
-              @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="50"></el-table-column>
+              @selection-change="handleSelectionChange"
+              border
+    >
+      <el-table-column type="selection" width="40"></el-table-column>
       <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
       <el-table-column type="id" label="主键" width="50" v-if="show"></el-table-column>
       <el-table-column prop="username" label="用户名称" width="120"></el-table-column>

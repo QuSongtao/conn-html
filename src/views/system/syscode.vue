@@ -5,7 +5,7 @@
         <el-button type="primary" @click="refresh" style="margin-left: 5px;">刷新</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="gridData" :height="tableHeight" :style="{'width': '100%','height': tableHeight}">
+    <el-table :data="gridData" :height="tableHeight" :style="{'width': '100%','height': tableHeight}" border>
       <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
       <el-table-column type="id" label="主键" width="50" v-if="show"></el-table-column>
       <el-table-column prop="sysCode" label="系统编码" width="100"></el-table-column>

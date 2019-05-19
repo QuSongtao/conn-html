@@ -14,22 +14,23 @@
                   @row-click="rowClick"
                   highlight-current-row
                   ref="indexTable"
+                  border
         >
           <el-table-column type="id" label="主键" width="50" v-if="show"></el-table-column>
           <el-table-column prop="typeCode" label="类型编码" width="70" v-if="show"></el-table-column>
           <el-table-column prop="typeName" label="类型名称" width="130" v-if="show"></el-table-column>
           <el-table-column prop="code" label="分类编码" width="70"></el-table-column>
-          <el-table-column prop="name" label="分类名称" width="130"></el-table-column>
+          <el-table-column prop="name" label="分类名称" width="130" show-overflow-tooltip></el-table-column>
         </el-table>
       </el-aside>
       <el-main style="background-color: #8c939d; padding: 0 !important;">
-        <el-table :data="gridData" height="100%" :style="{'width': '100%','height': '100%'}">
+        <el-table :data="gridData" height="100%" :style="{'width': '100%','height': '100%'}" border>
           <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
           <el-table-column type="id" label="主键" width="50" v-if="show"></el-table-column>
           <el-table-column prop="typeName" label="分类名称" width="130"></el-table-column>
           <el-table-column prop="code" label="编码" width="70"></el-table-column>
-          <el-table-column prop="name" label="名称" width="120"></el-table-column>
-          <el-table-column prop="des" label="备注说明" width="150"></el-table-column>
+          <el-table-column prop="name" label="名称" width="130"></el-table-column>
+          <el-table-column prop="des" label="备注说明" width="200" show-overflow-tooltip></el-table-column>
           <el-table-column label="操作" fixed="right">
             <template slot-scope="scope">
               <el-button size="mini" @click="edit(scope.$index, scope.row)" :disabled="scope.row.connFlag==='0'">修改</el-button>

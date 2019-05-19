@@ -28,7 +28,7 @@
               ref="tableSendLog"
               border
               @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="50"></el-table-column>
+      <el-table-column type="selection" width="40"></el-table-column>
       <el-table-column type="index" label="序号" width="50"></el-table-column>
       <el-table-column prop="id" label="主键ID" width="10" v-if="show"></el-table-column>
       <el-table-column prop="telId" label="电文ID" width="100" show-overflow-tooltip></el-table-column>

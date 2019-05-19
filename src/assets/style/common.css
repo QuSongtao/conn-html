@@ -44,7 +44,8 @@ a {
   font-family: 'Consolas';
   padding: 5px 10px !important;
 }
-
+/* 解决表格与表头错位问题 */
+body .el-table th.gutter{display: table-cell!important;}
 .el-table{ font-size: 12px !important; border:1px solid #e5e5e5;}
 .el-table--fit {border-right: 1px solid #e5e5e5 !important;}
 .el-table td{padding: 2px 0 !important;}/*表格行间距*/

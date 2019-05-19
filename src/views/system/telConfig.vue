@@ -8,25 +8,27 @@
         <el-button type="primary" @click="query">查询</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button @click="addNewRecord" v-if="isAdmin" >新增</el-button>
+        <el-button @click="addNewRecord" v-if="isAdmin">新增</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="telConfigData"
               :height="tableHeight"
               :style="{'width': '100%','height': tableHeight}"
               ref="tableSendLog"
-              @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="50"></el-table-column>
-      <el-table-column type="index" label="序号" width="60"></el-table-column>
+              @selection-change="handleSelectionChange"
+              border
+    >
+      <el-table-column type="selection" width="40" v-if="show"></el-table-column>
+      <el-table-column type="index" label="序号" width="50"></el-table-column>
       <el-table-column prop="id" label="主键ID" width="10" v-if="show"></el-table-column>
-      <el-table-column prop="telId" label="电文ID" width="120"></el-table-column>
-      <el-table-column prop="telName" label="电文名称" width="120"></el-table-column>
+      <el-table-column prop="telId" label="电文ID" width="100"></el-table-column>
+      <el-table-column prop="telName" label="电文名称" width="120" show-overflow-tooltip></el-table-column>
       <!--<el-table-column prop="transferType" label="类型" width="80" :formatter="statusFormat"></el-table-column>-->
-      <el-table-column prop="queueName" label="队列名称" width="80"></el-table-column>
-      <el-table-column prop="sender" label="发送者编码" width="80"></el-table-column>
-      <el-table-column prop="senderName" label="发送者名称" width="130"></el-table-column>
-      <el-table-column prop="receiver" label="接收者编码" width="80"></el-table-column>
-      <el-table-column prop="receiverName" label="接收者名称" width="130"></el-table-column>
+      <el-table-column prop="queueName" label="队列名称" width="80" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="sender" label="发送者编码" width="85"></el-table-column>
+      <el-table-column prop="senderName" label="发送者名称" width="130" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="receiver" label="接收者编码" width="85"></el-table-column>
+      <el-table-column prop="receiverName" label="接收者名称" width="130" show-overflow-tooltip></el-table-column>
       <el-table-column label="操作" fixed="right" v-if="isAdmin">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleInfo(scope.$index, scope.row)" v-if="isAdmin">修改</el-button>

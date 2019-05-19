@@ -15,6 +15,7 @@
                   highlight-current-row
                   @row-dblclick="rowDbClick"
                   ref="dataTable"
+                  border
         >
           <el-table-column prop="fileName" label="文件名称" width="180" show-overflow-tooltip></el-table-column>
           <el-table-column prop="fileSize" label="大小" width="70"></el-table-column>

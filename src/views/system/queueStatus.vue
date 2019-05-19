@@ -5,11 +5,11 @@
         <el-button type="primary" @click="refresh" style="margin-left: 5px;">刷新</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="gridData" :height="tableHeight" :style="{'width': '100%','height': tableHeight}">
+    <el-table :data="gridData" :height="tableHeight" :style="{'width': '100%','height': tableHeight}" border>
       <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
       <el-table-column type="id" label="主键" width="50" v-if="show"></el-table-column>
-      <el-table-column prop="objName" label="队列名称" width="180"></el-table-column>
-      <el-table-column prop="objDes" label="队列描述" width="180"></el-table-column>
+      <el-table-column prop="objName" label="队列名称" width="180" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="objDes" label="队列描述" width="180" show-overflow-tooltip></el-table-column>
       <el-table-column prop="objType" label="对象类型" width="50" v-if="show"></el-table-column>
       <el-table-column prop="transferType" label="收发类型" width="180" v-if="show">
         <template slot-scope="scope">
