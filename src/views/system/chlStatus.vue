@@ -117,7 +117,7 @@ export default {
           method: 'POST',
           url: '/mq/status/ctl',
           params: {
-            channelName: channelName,
+            chlName: channelName,
             handleCode: handleCode
           },
           success: function (res) {
