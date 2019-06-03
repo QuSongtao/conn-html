@@ -26,11 +26,25 @@
       </el-table-column>
       <el-table-column prop="objStatus" label="通道状态" width="180">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.objStatus==='正在运行' ? 'success' : 'danger'" size="medium" class="status-tag-radius">{{scope.row.objStatus}}</el-tag>
+          <el-tag :type="scope.row.objStatus==='正在运行' ? 'success' : 'danger'" size="medium" class="status-tag-radius">
+            {{scope.row.objStatus}}
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="remoteSystem" label="远程系统名称" width="180"></el-table-column>
-      <el-table-column label="" ></el-table-column>
+      <el-table-column label="操作" fixed="right" v-if="isAdmin">
+        <template slot-scope="scope">
+          <el-button size="mini" @click="stopChannel(scope.$index, scope.row)" :disabled="scope.row.connFlag==='已停止'"
+                     v-if="isAdmin">停止
+          </el-button>
+          <el-button size="mini" @click="resetChannel(scope.$index, scope.row)" :disabled="scope.row.connFlag!=='已停止'"
+                     v-if="isAdmin">重置
+          </el-button>
+          <el-button size="mini" @click="startChannel(scope.$index, scope.row)" :disabled="scope.row.connFlag==='正在运行'"
+                     v-if="isAdmin">启动
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       @size-change="handleSizeChange"
@@ -46,6 +60,7 @@
 
 <script>
 import _ from 'lodash';
+
 export default {
   data () {
     return {
@@ -57,7 +72,8 @@ export default {
       pageIndex: 1,
       pageSize: 20,
       totalRow: 0,
-      gridData: []
+      gridData: [],
+      isAdmin: this.$store.state.isAdmin === '1'
     };
   },
   methods: {
@@ -84,6 +100,39 @@ export default {
     handleCurrentChange: function (val) {
       this.pageIndex = val;
       this.refresh();
+    },
+    stopChannel: function (index, row) {
+      this.controlChannel(row.objName, 29);
+    },
+    resetChannel: function (index, row) {
+      this.controlChannel(row.objName, 27);
+    },
+    startChannel: function (index, row) {
+      this.controlChannel(row.objName, 28);
+    },
+    controlChannel: function (channelName, handleCode) {
+      this.$confirm('确定操作?').then(_ => {
+        let that = this;
+        this.$http.openApiAxios({
+          method: 'POST',
+          url: '/mq/status/ctl',
+          params: {
+            channelName: channelName,
+            handleCode: handleCode
+          },
+          success: function (res) {
+            let msgType = 'success';
+            if (res.meta.code === 0) {
+              msgType = 'error';
+            }
+            that.$message({
+              showClose: true,
+              message: res.data,
+              type: msgType
+            });
+          }
+        });
+      });
     }
   },
   mounted: function () {
@@ -96,7 +145,18 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .status-tag-radius{border-radius: 14px !important;}
-  .el-form-item{margin-bottom: 3px !important;}
-  .form-style{background-color: #fafafa; padding-top: 3px; margin-bottom: 5px;border: 1px solid #e5e5e5}
+  .status-tag-radius {
+    border-radius: 14px !important;
+  }
+
+  .el-form-item {
+    margin-bottom: 3px !important;
+  }
+
+  .form-style {
+    background-color: #fafafa;
+    padding-top: 3px;
+    margin-bottom: 5px;
+    border: 1px solid #e5e5e5
+  }
 </style>

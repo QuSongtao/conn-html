@@ -11,6 +11,7 @@ import QueueStatus from '@/views/system/queueStatus.vue'; // 队列状态
 import TelConfig from '@/views/system/telConfig.vue'; // 电文配置
 import SendLog from '@/views/system/sendLog.vue'; // 系统发送日志
 import RecvLog from '@/views/system/recvLog.vue'; // 系统接收日志
+import RecvData from '@/views/system/recvData.vue'; // 接收总表数据
 import MqLog from '@/views/system/mqLog.vue'; // 后端MQ日志
 import SocketLog from '@/views/system/socketLog.vue'; // 后端SOCKET日志
 import User from '@/views/system/user.vue'; // 用户管理(授权,增加,修改密码等)
@@ -35,6 +36,7 @@ const router = new Router({
         {path: '/telConfig', name: 'telConfig', component: TelConfig},
         {path: '/sendLog', name: 'sendLog', component: SendLog},
         {path: '/recvLog', name: 'recvLog', component: RecvLog},
+        {path: '/recvData', name: 'recvData', component: RecvData},
         {path: '/mqLog', name: 'mqLog', component: MqLog},
         {path: '/socketLog', name: 'socketLog', component: SocketLog},
         {path: '/user', name: 'user', component: User},

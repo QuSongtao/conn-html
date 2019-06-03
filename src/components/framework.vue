@@ -100,18 +100,145 @@ export default {
   }),
   methods: {
     _getNavData () {
-      const that = this;
-      this.$http.openApiAxios({
-        method: 'GET',
-        url: './../../static/nav.json',
-        success: function (res) {
-          that.navData = res;
-        }
-      });
-      // axios.get('./../../static/nav.json').then(res => {
-      //   this.navData = res.data;
-      //   console.log(res.data);
+      // const that = this;
+      // this.$http.openApiAxios({
+      //   method: 'GET',
+      //   url: './../../static/nav.json',
+      //   success: function (res) {
+      //     that.navData = res;
+      //   }
       // });
+      this.navData = [
+        {
+          FM: 'FM0001',
+          CODE: '01',
+          TEXT: '系统首页',
+          URL: '/dashboard',
+          ICON: 'el-icon-location',
+          POWER: true,
+          LEAF: true,
+          VALUE: []
+        },
+        {
+          FM: 'FM0002',
+          CODE: '02',
+          TEXT: '通道状态',
+          URL: '/chlStatus',
+          ICON: 'el-icon-share',
+          POWER: true,
+          LEAF: true
+        },
+        {
+          FM: 'FM0003',
+          CODE: '03',
+          TEXT: '队列状态',
+          URL: '/queueStatus',
+          ICON: 'el-icon-message',
+          POWER: true,
+          LEAF: true,
+          VALUE: []
+        },
+        {
+          FM: 'FM0004',
+          CODE: '04',
+          TEXT: '电文配置',
+          URL: '/telConfig',
+          ICON: 'el-icon-news',
+          POWER: true,
+          LEAF: true,
+          VALUE: []
+        },
+        {
+          FM: 'FM0005',
+          CODE: '05',
+          TEXT: '发送日志',
+          URL: '/sendLog',
+          ICON: 'el-icon-document',
+          POWER: true,
+          LEAF: true,
+          VALUE: []
+        },
+        {
+          FM: 'FM0006',
+          CODE: '06',
+          TEXT: '接收日志',
+          URL: '/recvLog',
+          ICON: 'el-icon-tickets',
+          POWER: true,
+          LEAF: true,
+          VALUE: []
+        },
+        {
+          FM: 'FM00X6',
+          CODE: 'X6',
+          TEXT: '接收总表',
+          URL: '/recvData',
+          ICON: 'el-icon-tickets',
+          POWER: true,
+          LEAF: true,
+          VALUE: []
+        },
+        {
+          FM: 'FM0007',
+          CODE: '07',
+          TEXT: '系统管理',
+          URL: 'app',
+          ICON: 'el-icon-time',
+          POWER: true,
+          VALUE: [
+            {
+              FP: 'md0001',
+              CODE: '0701',
+              TEXT: 'IBMMQ日志',
+              URL: '/mqLog',
+              SHOW: true,
+              LEAF: true,
+              INDEX: '1',
+              VALUE: null
+            },
+            {
+              FP: 'md0002',
+              CODE: '0702',
+              TEXT: 'SOCKET日志',
+              URL: '/socketLog',
+              SHOW: true,
+              LEAF: true,
+              INDEX: '2',
+              VALUE: null
+            },
+            {
+              FP: 'md0003',
+              CODE: '0703',
+              TEXT: '用户信息管理',
+              URL: '/user',
+              SHOW: true,
+              LEAF: true,
+              INDEX: '3',
+              VALUE: null
+            },
+            {
+              FP: 'md0004',
+              CODE: '0704',
+              TEXT: '通信系统编码',
+              URL: '/syscode',
+              SHOW: true,
+              LEAF: true,
+              INDEX: '4',
+              VALUE: null
+            },
+            {
+              FP: 'md0005',
+              CODE: '0705',
+              TEXT: '编码字典管理',
+              URL: '/dict',
+              SHOW: true,
+              LEAF: true,
+              INDEX: '5',
+              VALUE: null
+            }
+          ]
+        }
+      ];
     },
     handleSelect (index) {
       this.defaultActiveIndex = index;

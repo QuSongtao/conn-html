@@ -60,9 +60,9 @@ export default {
                 that.$store.commit('setUsername', res.data.username);
                 that.$store.commit('setAdmin', res.data.isAdmin);
                 that.$router.push('/dashboard');
-                window.localStorage.setItem('accessToken', res.data.accessToken);
-                window.localStorage.setItem('username', res.data.username);
-                window.localStorage.setItem('isAdmin', res.data.isAdmin);
+                window.sessionStorage.setItem('accessToken', res.data.accessToken);
+                window.sessionStorage.setItem('username', res.data.username);
+                window.sessionStorage.setItem('isAdmin', res.data.isAdmin);
                 // that.$router.push({name: 'dashboard', params: {username: res.data.username}});
               } else {
                 that.$message.error(res.meta.message);

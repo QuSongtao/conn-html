@@ -59,6 +59,16 @@
     "VALUE": []
   },
   {
+    "FM": "FM00X6",
+    "CODE": "X6",
+    "TEXT": "接收总表",
+    "URL": "/recvData",
+    "ICON": "el-icon-tickets",
+    "POWER": true,
+    "LEAF": true,
+    "VALUE": []
+  },
+  {
     "FM": "FM0007",
     "CODE": "07",
     "TEXT": "系统管理",

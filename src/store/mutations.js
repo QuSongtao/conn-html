@@ -16,8 +16,8 @@ export default {
     state.username = username;
   },
   flushData: (state) => {
-    state.accessToken = window.localStorage.getItem('accessToken');
-    state.username = window.localStorage.getItem('username');
-    state.isAdmin = window.localStorage.getItem('isAdmin');
+    state.accessToken = window.sessionStorage.getItem('accessToken');
+    state.username = window.sessionStorage.getItem('username');
+    state.isAdmin = window.sessionStorage.getItem('isAdmin');
   }
 };
