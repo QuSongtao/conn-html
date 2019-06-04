@@ -11,27 +11,28 @@
       <el-form-item>
         <el-button type="primary" @click="refresh">刷新</el-button>
       </el-form-item>
+      <div style="float: right; font-size: 14px; color: blue; margin-top: 10px; margin-right: 30px;"> *操作通道启停后，请手动刷新数据获取最新状态！</div>
     </el-form>
     <el-table :data="gridData" :height="tableHeight" :style="{'width': '100%','height': tableHeight}" border>
       <el-table-column type="index" label="序号" width="50"></el-table-column>
       <el-table-column type="id" label="主键" width="50" v-if="show"></el-table-column>
-      <el-table-column prop="objName" label="通道名称" width="180" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="objName" label="通道名称" width="120" show-overflow-tooltip></el-table-column>
       <el-table-column prop="objDes" label="通道描述" width="180" show-overflow-tooltip></el-table-column>
       <el-table-column prop="objType" label="对象类型" width="50" v-if="show"></el-table-column>
-      <el-table-column prop="transferType" label="收发类型" width="180">
+      <el-table-column prop="transferType" label="通道类型" width="90">
         <template slot-scope="scope">
           <span v-if="scope.row.transferType==='S'">发送通道</span>
           <span v-if="scope.row.transferType==='R'">接收通道</span>
         </template>
       </el-table-column>
-      <el-table-column prop="objStatus" label="通道状态" width="180">
+      <el-table-column prop="objStatus" label="通道状态" width="100">
         <template slot-scope="scope">
           <el-tag :type="scope.row.objStatus==='正在运行' ? 'success' : 'danger'" size="medium" class="status-tag-radius">
             {{scope.row.objStatus}}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="remoteSystem" label="远程系统名称" width="180"></el-table-column>
+      <el-table-column prop="remoteSystem" label="远程系统名称" width="180" show-overflow-tooltip></el-table-column>
       <el-table-column label="操作" fixed="right" v-if="isAdmin">
         <template slot-scope="scope">
           <el-button size="mini" @click="stopChannel(scope.$index, scope.row)" :disabled="scope.row.objStatus==='已停止'"
