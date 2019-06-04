@@ -34,13 +34,13 @@
       <el-table-column prop="remoteSystem" label="远程系统名称" width="180"></el-table-column>
       <el-table-column label="操作" fixed="right" v-if="isAdmin">
         <template slot-scope="scope">
-          <el-button size="mini" @click="stopChannel(scope.$index, scope.row)" :disabled="scope.row.connFlag==='已停止'"
+          <el-button size="mini" @click="stopChannel(scope.$index, scope.row)" :disabled="scope.row.objStatus==='已停止'"
                      v-if="isAdmin">停止
           </el-button>
-          <el-button size="mini" @click="resetChannel(scope.$index, scope.row)" :disabled="scope.row.connFlag!=='已停止'"
+          <el-button size="mini" @click="resetChannel(scope.$index, scope.row)" :disabled="scope.row.objStatus!=='已停止'"
                      v-if="isAdmin">重置
           </el-button>
-          <el-button size="mini" @click="startChannel(scope.$index, scope.row)" :disabled="scope.row.connFlag==='正在运行'"
+          <el-button size="mini" @click="startChannel(scope.$index, scope.row)" :disabled="scope.row.objStatus==='正在运行'"
                      v-if="isAdmin">启动
           </el-button>
         </template>
