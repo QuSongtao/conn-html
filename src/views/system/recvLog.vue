@@ -34,8 +34,8 @@
       <el-table-column prop="telId" label="电文ID" width="100" show-overflow-tooltip></el-table-column>
       <el-table-column prop="senderName" label="发送者" width="100" show-overflow-tooltip></el-table-column>
       <el-table-column prop="receiverName" label="接收者" width="100" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="recvTime" label="接收时间" width="150"></el-table-column>
-      <el-table-column prop="dealTime" label="处理时间" width="150"></el-table-column>
+      <el-table-column prop="recvTime" label="接收时间" width="160"></el-table-column>
+      <el-table-column prop="dealTime" label="处理时间" width="160"></el-table-column>
       <el-table-column prop="dealFlag" label="处理状态" width="80" :formatter="statusFormat"></el-table-column>
       <el-table-column prop="des" label="处理结果" width="200" show-overflow-tooltip></el-table-column>
       <el-table-column prop="msgId" label="消息ID" v-if="show"></el-table-column>
