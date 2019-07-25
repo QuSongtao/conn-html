@@ -34,10 +34,10 @@
       <el-table-column prop="telId" label="电文ID" width="100" show-overflow-tooltip></el-table-column>
       <!--<el-table-column prop="telType" label="电文类型" width="80"></el-table-column>-->
       <el-table-column prop="sendFlag" label="发送状态" width="80" :formatter="statusFormat"></el-table-column>
-      <el-table-column prop="senderName" label="发送者" width="120" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="receiverName" label="接收者" width="120" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="插入时间" width="160"></el-table-column>
-      <el-table-column prop="sendTime" label="发送时间" width="160"></el-table-column>
+      <el-table-column prop="senderName" label="发送者" width="130" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="receiverName" label="接收者" width="130" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="createTime" label="插入时间" width="170" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="sendTime" label="发送时间" width="170" show-overflow-tooltip></el-table-column>
       <el-table-column prop="sendResult" label="结果描述" width="200" show-overflow-tooltip></el-table-column>
       <el-table-column prop="msgId" label="消息ID" v-if="show"></el-table-column>
       <el-table-column label="操作" fixed="right">
