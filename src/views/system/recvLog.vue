@@ -1,21 +1,26 @@
 <template>
   <div>
-    <el-form :inline="true" :model="formInline" size="small" class="form-style">
+    <el-form :inline="true" :model="formInline" size="mini" class="form-style">
       <el-form-item label="接收时间：" required label-width="110px">
         <el-col :span="11">
           <el-form-item prop="date1">
-            <el-date-picker type="date" placeholder="选择起始日期" value-format="yyyy-MM-dd" v-model="formInline.date1" style="width: 150px;"></el-date-picker>
+            <el-date-picker type="date" placeholder="选择起始日期" value-format="yyyy-MM-dd" v-model="formInline.date1" style="width: 130px;"></el-date-picker>
           </el-form-item>
         </el-col>
         <el-col class="line" :span="2" style="text-align: center">-</el-col>
         <el-col :span="11">
           <el-form-item prop="date2">
-            <el-date-picker type="date" placeholder="选择终止日期" value-format="yyyy-MM-dd" v-model="formInline.date2" style="width: 150px;"></el-date-picker>
+            <el-date-picker type="date" placeholder="选择终止日期" value-format="yyyy-MM-dd" v-model="formInline.date2" style="width: 130px;"></el-date-picker>
           </el-form-item>
         </el-col>
       </el-form-item>
+      <el-form-item label="发送者：" label-width="70px">
+        <el-select v-model="formInline.sender" placeholder="请选择" clearable style="width: 190px;">
+          <el-option v-for="item in selectOptions" :label="item.sysName" :value="item.sysCode" :key="item.id"></el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item label="电文ID：" label-width="70px">
-        <el-input v-model="formInline.telId" placeholder="输入电文ID" clearable style="width: 160px;"></el-input>
+        <el-input v-model="formInline.telId" placeholder="输入电文ID" clearable style="width: 130px;"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="query">查询</el-button>
@@ -91,7 +96,8 @@ export default {
         date1: this.$util.formatDate(new Date()),
         date2: this.$util.formatDate(new Date())
       },
-      gridData: []
+      gridData: [],
+      selectOptions: []
     };
   },
   methods: {
@@ -105,6 +111,7 @@ export default {
           dtStart: this.formInline.date1,
           dtEnd: this.formInline.date2,
           telId: this.formInline.telId,
+          sender: this.formInline.sender,
           pageIndex: this.pageIndex,
           pageSize: this.pageSize
         },
@@ -180,6 +187,17 @@ export default {
     handleCurrentChange: function (val) {
       this.pageIndex = val;
       this.query();
+    },
+    // 获取通信系统列表
+    getSyscode: function () {
+      const that = this;
+      this.$http.openApiAxios({
+        method: 'GET',
+        url: '/mgr/sysCode/all',
+        success: function (res) {
+          that.selectOptions = res.data;
+        }
+      });
     }
   },
   mounted: function () {
@@ -188,11 +206,12 @@ export default {
     window.onresize = _.debounce(() => {
       that.tableHeight = document.body.clientHeight - 150;
     }, 400);
+    this.getSyscode();
   }
 };
 </script>
 <style lang="scss" scoped>
   .status-tag-radius{border-radius: 14px !important;}
   .el-form-item{margin-bottom: 3px !important;}
-  .form-style{background-color: #fafafa; padding-top: 3px; margin-bottom: 5px;border: 1px solid #e5e5e5}
+  .form-style{background-color: #fafafa; padding-top: 3px; margin-bottom: 5px;border: 1px solid #e5e5e5; font-size: 12px;}
 </style>

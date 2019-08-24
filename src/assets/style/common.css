@@ -74,5 +74,11 @@ body .el-table th.gutter{display: table-cell!important;}
   padding: 10px 15px 10px !important;
 }
 
+.el-select-dropdown__item{
+  font-size: 12px !important;
+  line-height: 28px !important;
+  height: 28px !important;
+}
+
 
 
