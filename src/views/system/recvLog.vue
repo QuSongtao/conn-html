@@ -22,6 +22,13 @@
       <el-form-item label="电文ID：" label-width="70px">
         <el-input v-model="formInline.telId" placeholder="输入电文ID" clearable style="width: 130px;"></el-input>
       </el-form-item>
+      <el-form-item label="处理状态：" label-width="90px">
+        <el-select v-model="formInline.dealFlag" placeholder="请选择" clearable style="width: 130px;">
+          <el-option label="业务处理失败" value="0"></el-option>
+          <el-option label="触发器失败" value="9"></el-option>
+          <el-option label="业务处理成功" value="1"></el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="query">查询</el-button>
         <el-button type="primary" plain @click="reDeal" v-if="this.$store.state.isAdmin === '1'">重接</el-button>
@@ -41,7 +48,7 @@
       <el-table-column prop="receiverName" label="接收者" width="130" show-overflow-tooltip></el-table-column>
       <el-table-column prop="recvTime" label="接收时间" width="170" show-overflow-tooltip></el-table-column>
       <el-table-column prop="dealTime" label="处理时间" width="170" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dealFlag" label="处理状态" width="80" :formatter="statusFormat"></el-table-column>
+      <el-table-column prop="dealFlag" label="处理状态" width="130" :formatter="statusFormat"></el-table-column>
       <el-table-column prop="des" label="处理结果" width="200" show-overflow-tooltip></el-table-column>
       <el-table-column prop="msgId" label="消息ID" v-if="show"></el-table-column>
       <el-table-column label="操作" fixed="right">
@@ -112,6 +119,7 @@ export default {
           dtEnd: this.formInline.date2,
           telId: this.formInline.telId,
           sender: this.formInline.sender,
+          dealFlag: this.formInline.dealFlag,
           pageIndex: this.pageIndex,
           pageSize: this.pageSize
         },
@@ -125,9 +133,11 @@ export default {
     statusFormat: function (row, column, cellValue, index) {
       switch (cellValue) {
         case '0':
-          return '失败';
+          return '业务处理失败';
         case '1':
-          return '成功';
+          return '业务处理成功';
+        case '9':
+          return '触发器失败';
         default:
           return '未知';
       }

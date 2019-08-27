@@ -19,7 +19,7 @@
       <el-table-column prop="username" label="用户名称" width="120"></el-table-column>
       <el-table-column prop="loginName" label="登录账号" width="120"></el-table-column>
       <el-table-column prop="isAdmin" label="用户角色" width="100" :formatter="adminFormat"></el-table-column>
-      <el-table-column prop="lastLoginTime" label="最后登录时间" width="150"></el-table-column>
+      <el-table-column prop="lastLoginTime" label="最后登录时间" width="190"></el-table-column>
       <el-table-column prop="des" label="备注说明" width="180"></el-table-column>
       <el-table-column label="操作" fixed="right">
         <template slot-scope="scope">
