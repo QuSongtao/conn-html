@@ -9,8 +9,8 @@
     <el-container v-bind:style="{'width': '100%', 'height': tableHeight + 'px'}">
       <el-aside width="202px" style="background-color: #4a5064; margin-right: 5px;">
         <el-table :data="gridDataIndex"
-                  height="100%"
-                  :style="{'width': '100%','height': '100%'}"
+                  :height="tableHeight"
+                  :style="{'width': '100%','height': tableHeight + 'px'}"
                   @row-click="rowClick"
                   highlight-current-row
                   ref="indexTable"
@@ -24,7 +24,7 @@
         </el-table>
       </el-aside>
       <el-main style="background-color: #8c939d; padding: 0 !important;">
-        <el-table :data="gridData" height="100%" :style="{'width': '100%','height': '100%'}" border>
+        <el-table :data="gridData" :height="tableHeight" :style="{'width': '100%','height': tableHeight + 'px'}" border>
           <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
           <el-table-column type="id" label="主键" width="50" v-if="show"></el-table-column>
           <el-table-column prop="typeName" label="分类名称" width="130"></el-table-column>
