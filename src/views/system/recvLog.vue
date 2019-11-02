@@ -24,9 +24,9 @@
       </el-form-item>
       <el-form-item label="处理状态：" label-width="90px">
         <el-select v-model="formInline.dealFlag" placeholder="请选择" clearable style="width: 130px;">
-          <el-option label="业务处理失败" value="0"></el-option>
-          <el-option label="触发器失败" value="9"></el-option>
-          <el-option label="业务处理成功" value="1"></el-option>
+          <el-option label="处理失败" value="0"></el-option>
+          <!--<el-option label="触发器失败" value="9"></el-option>-->
+          <el-option label="处理成功" value="1"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -48,7 +48,13 @@
       <el-table-column prop="receiverName" label="接收者" width="130" show-overflow-tooltip></el-table-column>
       <el-table-column prop="recvTime" label="接收时间" width="170" show-overflow-tooltip></el-table-column>
       <el-table-column prop="dealTime" label="处理时间" width="170" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dealFlag" label="处理状态" width="130" :formatter="statusFormat"></el-table-column>
+      <el-table-column prop="dealFlag" label="处理状态" width="130" :formatter="statusFormat">
+        <template slot-scope="scope">
+          <span :style="{'color': scope.row.dealFlag === '0' ? 'red' : ''}">
+            {{statusFormat(scope.row.dealFlag)}}
+          </span>
+        </template>
+      </el-table-column>
       <el-table-column prop="des" label="处理结果" width="200" show-overflow-tooltip></el-table-column>
       <el-table-column prop="msgId" label="消息ID" v-if="show"></el-table-column>
       <el-table-column label="操作" fixed="right">
@@ -130,7 +136,7 @@ export default {
       });
     },
     // 处理状态格式化
-    statusFormat: function (row, column, cellValue, index) {
+    statusFormat: function (cellValue) {
       switch (cellValue) {
         case '0':
           return '业务处理失败';
